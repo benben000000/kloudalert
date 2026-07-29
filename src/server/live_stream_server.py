@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
 Real-Time Live Bataan Weather Telemetry & Liquid Neural Network Server
-Fetches live Open-Meteo weather readings for all 12 Bataan AWS stations every 60 seconds,
-computes Haversine / IDW spatial fusion, and evaluates PyTorch LNN nowcasts on REAL live telemetries.
-Zero mock data, zero synthetic random tensors.
+- Ingests live Open-Meteo telemetry for all 12 Bataan AWS stations every 60 seconds
+- Spawns the LFM-230M Self-Improving Agentic Feedback Loop (Predict -> Experiment -> Verify -> Retrain -> Hot-Swap ONNX)
+- Computes Haversine / IDW spatial fusion for continuous nowcasting
 """
 
 import os
@@ -18,15 +18,15 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 from pathlib import Path
 from threading import Thread
 
-# Import LNN model definition
+# Add src directories to sys.path
 WORKSPACE_ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.append(str(WORKSPACE_ROOT / "src" / "models"))
-from lnn_model import LiquidNeuralNetwork
+sys.path.append(str(WORKSPACE_ROOT / "src" / "engine"))
+
+from lfm_foundation_model import LiquidFoundationModel230M
+from self_improving_agentic_loop import LFMSelfImprovingAgent
 
 STATIONS_PATH = WORKSPACE_ROOT / "src" / "data" / "bataan_stations.json"
-WEIGHTS_PATH = WORKSPACE_ROOT / "src" / "models" / "weights" / "lnn_weather_model.pt"
-META_PATH = WORKSPACE_ROOT / "src" / "models" / "weights" / "model_meta.json"
-
 PORT = 8085
 EARTH_RADIUS_KM = 6371.0088
 
@@ -40,18 +40,8 @@ live_cache = {
 with open(STATIONS_PATH, "r", encoding="utf-8") as f:
     BATAAN_STATIONS = json.load(f)
 
-# Load LNN PyTorch Model
-lnn_model = None
-if WEIGHTS_PATH.exists() and META_PATH.exists():
-    try:
-        with open(META_PATH, "r", encoding="utf-8") as f:
-            meta = json.load(f)
-        lnn_model = LiquidNeuralNetwork(input_dim=meta["input_dim"], hidden_dim=meta["hidden_dim"], output_steps=meta["output_steps"])
-        lnn_model.load_state_dict(torch.load(WEIGHTS_PATH, map_location=torch.device('cpu')))
-        lnn_model.eval()
-        print(f"[SERVER] Loaded PyTorch LNN Model from {WEIGHTS_PATH}")
-    except Exception as e:
-        print(f"[SERVER] Error loading LNN model: {e}")
+# Initialize Self-Improving LFM Agent
+lfm_agent = LFMSelfImprovingAgent()
 
 def haversine_distance(lat1, lon1, lat2, lon2):
     phi1, phi2 = math.radians(lat1), math.radians(lat2)
@@ -103,6 +93,13 @@ def update_live_telemetry():
     }
     print(f"[SERVER] Telemetry update complete! {len(results)} stations online.")
 
+    # Trigger Self-Improving Ground-Truth Verification & Retraining Pass
+    primary = results.get("AWS-01", next(iter(results.values()), {}))
+    if primary:
+        retrain_result = lfm_agent.verify_ground_truth_and_improve(primary)
+        if retrain_result.get("retrained"):
+            print(f"[SERVER] LFM Agent completed online fine-tuning and hot-swapped ONNX binary! Loss: {retrain_result.get('loss'):.4f}")
+
 def background_poller():
     while True:
         try:
@@ -112,7 +109,6 @@ def background_poller():
         time.sleep(60)
 
 def compute_idw_feature_vector(lat, lon):
-    """Computes Inverse Distance Weighting (IDW) spatial interpolation from real stations."""
     stations_data = live_cache.get("stations_data", {})
     if not stations_data:
         return [30.0, 75.0, 1010.0, 0.0, 5.0, 0.0, 0.0, 36.0]
@@ -172,17 +168,20 @@ class TelemetryAPIHandler(BaseHTTPRequestHandler):
             real_sequence = [real_vector] * 24
 
             prob_curve = [0.05] * 18
-            if lnn_model is not None:
-                try:
-                    seq_tensor = torch.tensor([real_sequence], dtype=torch.float32)
-                    with torch.no_grad():
-                        out = lnn_model(seq_tensor)
-                        prob_curve = out.squeeze(0).tolist()
-                except Exception as e:
-                    print(f"[SERVER] LNN inference error: {e}")
+            try:
+                seq_tensor = torch.tensor([real_sequence], dtype=torch.float32)
+                with torch.no_grad():
+                    out = lfm_agent.model(seq_tensor)
+                    prob_curve = out.squeeze(0).tolist()
+            except Exception as e:
+                print(f"[SERVER] LFM Nowcast error: {e}")
+
+            # Log prediction experiment into LFM Self-Improving Agent Queue
+            exp_record = lfm_agent.log_prediction_experiment(lat, lon, real_vector, prob_curve)
 
             res = {
                 "user_location": {"lat": lat, "lon": lon},
+                "experiment_id": exp_record.get("id"),
                 "idw_fused_vector": real_vector,
                 "prob_curve": prob_curve,
                 "max_prob": max(prob_curve),
@@ -190,12 +189,17 @@ class TelemetryAPIHandler(BaseHTTPRequestHandler):
             }
             self._set_cors()
             self.wfile.write(json.dumps(res).encode('utf-8'))
+        elif parsed.path == "/api/v1/lfm-experiments":
+            # Expose LFM Experiment Log & Performance Metrics
+            experiments_data = lfm_agent.load_experiments()
+            self._set_cors()
+            self.wfile.write(json.dumps(experiments_data).encode('utf-8'))
         else:
             self.send_error(404, "Endpoint not found")
 
 def start_server():
     server = HTTPServer(("0.0.0.0", PORT), TelemetryAPIHandler)
-    print(f"[SERVER] Live Bataan Weather Telemetry API running on port {PORT}...")
+    print(f"[SERVER] Live Bataan Weather & LFM-230M Agentic Telemetry API running on port {PORT}...")
     server.serve_forever()
 
 if __name__ == "__main__":

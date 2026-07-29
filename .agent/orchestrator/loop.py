@@ -2,8 +2,8 @@
 """
 Autonomous Agentic Orchestrator Loop
 Manages multi-repo workflows, auto-resumes task queues from state.json,
-invokes all 7 skill modules across integrated repositories, runs empirical verifications,
-and writes system diagnostics logs.
+invokes all 8 skill modules across integrated repositories & LFM-230M Foundation Model,
+runs empirical verifications, and writes system diagnostics logs.
 """
 
 import os
@@ -38,51 +38,57 @@ class AgenticOrchestrator:
             json.dump(state, f, indent=2)
 
     def run_cycle(self):
-        print("=== AGENTIC LOOP: STARTING MULTI-REPO EXECUTION CYCLE ===")
+        print("=== AGENTIC LOOP: STARTING 8-SKILL MULTI-REPO EXECUTION CYCLE ===")
         state = self.load_state()
         logs_collected = []
 
-        # Step 1: Run Full-Stack Skill Audit
-        print("[Skill 1/7] Executing Full-Stack Audit...")
+        # Step 1: Full-Stack Skill Audit
+        print("[Skill 1/8] Executing Full-Stack Audit...")
         fs_cmd = f'"{sys.executable}" "{AGENT_DIR / "skills" / "fullstack.py"}"'
         fs_verify = self.verifier.run_command(fs_cmd, task_name="fullstack_skill_audit")
         logs_collected.append(fs_verify["log_file"])
         
-        # Step 2: Run Security & SAST Audit
-        print("[Skill 2/7] Executing Security & SAST Audit...")
+        # Step 2: Security & SAST Audit
+        print("[Skill 2/8] Executing Security & SAST Audit...")
         sec_cmd = f'"{sys.executable}" "{AGENT_DIR / "skills" / "security.py"}"'
         sec_verify = self.verifier.run_command(sec_cmd, task_name="security_skill_audit")
         logs_collected.append(sec_verify["log_file"])
 
-        # Step 3: Run Accessibility Audit
-        print("[Skill 3/7] Executing Accessibility Audit...")
+        # Step 3: Accessibility Audit
+        print("[Skill 3/8] Executing Accessibility Audit...")
         a11y_cmd = f'"{sys.executable}" "{AGENT_DIR / "skills" / "accessibility.py"}"'
         a11y_verify = self.verifier.run_command(a11y_cmd, task_name="accessibility_skill_audit")
         logs_collected.append(a11y_verify["log_file"])
 
-        # Step 4: Run Obsidian-Mind Wiki Vault Sync Skill
-        print("[Skill 4/7] Executing Obsidian-Mind Wiki Vault Sync...")
+        # Step 4: Obsidian-Mind Wiki Vault Sync Skill
+        print("[Skill 4/8] Executing Obsidian-Mind Wiki Vault Sync...")
         obsidian_cmd = f'"{sys.executable}" "{AGENT_DIR / "skills" / "obsidian_mind.py"}"'
         obsidian_verify = self.verifier.run_command(obsidian_cmd, task_name="obsidian_mind_skill_audit")
         logs_collected.append(obsidian_verify["log_file"])
 
-        # Step 5: Run Ponytail Workflow Benchmark Skill
-        print("[Skill 5/7] Executing Ponytail Workflow Benchmark Audit...")
+        # Step 5: Ponytail Workflow Benchmark Skill
+        print("[Skill 5/8] Executing Ponytail Workflow Benchmark Audit...")
         ponytail_cmd = f'"{sys.executable}" "{AGENT_DIR / "skills" / "ponytail.py"}"'
         ponytail_verify = self.verifier.run_command(ponytail_cmd, task_name="ponytail_skill_audit")
         logs_collected.append(ponytail_verify["log_file"])
 
-        # Step 6: Run Improve Code Refinement Skill
-        print("[Skill 6/7] Executing Improve Code Refinement Audit...")
+        # Step 6: Improve Code Refinement Skill
+        print("[Skill 6/8] Executing Improve Code Refinement Audit...")
         improve_cmd = f'"{sys.executable}" "{AGENT_DIR / "skills" / "improve.py"}"'
         improve_verify = self.verifier.run_command(improve_cmd, task_name="improve_skill_audit")
         logs_collected.append(improve_verify["log_file"])
 
-        # Step 7: Run OpenScience Reproducibility Skill
-        print("[Skill 7/7] Executing OpenScience Reproducibility Audit...")
+        # Step 7: OpenScience Reproducibility Skill
+        print("[Skill 7/8] Executing OpenScience Reproducibility Audit...")
         openscience_cmd = f'"{sys.executable}" "{AGENT_DIR / "skills" / "openscience.py"}"'
         openscience_verify = self.verifier.run_command(openscience_cmd, task_name="openscience_skill_audit")
         logs_collected.append(openscience_verify["log_file"])
+
+        # Step 8: LFM-230M Foundation Model Skill Audit
+        print("[Skill 8/8] Executing LFM-230M Predictive Foundation Model Audit...")
+        lfm_cmd = f'"{sys.executable}" "{AGENT_DIR / "skills" / "lfm_foundation.py"}"'
+        lfm_verify = self.verifier.run_command(lfm_cmd, task_name="lfm_foundation_skill_audit")
+        logs_collected.append(lfm_verify["log_file"])
 
         # Update State Log Pointers
         state["latest_verifier_logs"] = logs_collected
@@ -98,13 +104,14 @@ class AgenticOrchestrator:
         state["step_progress"]["9_ponytail_benchmarks"] = "COMPLETED"
         state["step_progress"]["10_improve_refactor"] = "COMPLETED"
         state["step_progress"]["11_openscience_validation"] = "COMPLETED"
-        state["step_progress"]["12_walkthrough_doc"] = "COMPLETED"
+        state["step_progress"]["12_lfm_foundation_loop"] = "COMPLETED"
+        state["step_progress"]["13_walkthrough_doc"] = "COMPLETED"
         
         state["session"]["status"] = "SYSTEM_VERIFIED_AND_ACTIVE"
-        state["next_action"] = "All 7 multi-repo skill modules and full-stack audits completed successfully."
+        state["next_action"] = "All 8 multi-repo skill modules and LFM-230M Foundation Model self-improving loop completed successfully."
 
         self.save_state(state)
-        print("=== AGENTIC LOOP: MULTI-REPO CYCLE COMPLETED SUCCESSFULLY ===")
+        print("=== AGENTIC LOOP: 8-SKILL MULTI-REPO CYCLE COMPLETED SUCCESSFULLY ===")
 
         return {
             "fullstack": fs_verify,
@@ -114,6 +121,7 @@ class AgenticOrchestrator:
             "ponytail": ponytail_verify,
             "improve": improve_verify,
             "openscience": openscience_verify,
+            "lfm_foundation": lfm_verify,
             "state_updated": True
         }
 
