@@ -1,0 +1,20 @@
+{
+  "province": "Bataan",
+  "country": "Philippines",
+  "country_code": "PH",
+  "timezone": "Asia/Manila",
+  "stations": [
+    { "id": "AWS-BALANGA", "name": "Balanga City (Capital)", "type": "City", "lat": 14.6775, "lon": 120.5431, "elevation_m": 12.0 },
+    { "id": "AWS-MARIVELES", "name": "Mariveles (FAB Zone)", "type": "Municipality", "lat": 14.4333, "lon": 120.4833, "elevation_m": 25.0 },
+    { "id": "AWS-DINALUPIHAN", "name": "Dinalupihan (North Inland)", "type": "Municipality", "lat": 14.8783, "lon": 120.4633, "elevation_m": 45.0 },
+    { "id": "AWS-HERMOSA", "name": "Hermosa", "type": "Municipality", "lat": 14.8322, "lon": 120.5050, "elevation_m": 18.0 },
+    { "id": "AWS-ORANI", "name": "Orani", "type": "Municipality", "lat": 14.8000, "lon": 120.5333, "elevation_m": 15.0 },
+    { "id": "AWS-SAMAL", "name": "Samal", "type": "Municipality", "lat": 14.7667, "lon": 120.5500, "elevation_m": 10.0 },
+    { "id": "AWS-ABUCAY", "name": "Abucay", "type": "Municipality", "lat": 14.7214, "lon": 120.5317, "elevation_m": 14.0 },
+    { "id": "AWS-PILAR", "name": "Pilar (Mt. Samat Sector)", "type": "Municipality", "lat": 14.6644, "lon": 120.5606, "elevation_m": 20.0 },
+    { "id": "AWS-ORION", "name": "Orion", "type": "Municipality", "lat": 14.6189, "lon": 120.5822, "elevation_m": 8.0 },
+    { "id": "AWS-LIMAY", "name": "Limay (Industrial Coast)", "type": "Municipality", "lat": 14.5619, "lon": 120.5989, "elevation_m": 16.0 },
+    { "id": "AWS-BAGAC", "name": "Bagac (West Coast)", "type": "Municipality", "lat": 14.6033, "lon": 120.3922, "elevation_m": 30.0 },
+    { "id": "AWS-MORONG", "name": "Morong (Northwest Coast)", "type": "Municipality", "lat": 14.6797, "lon": 120.2644, "elevation_m": 22.0 }
+  ]
+}

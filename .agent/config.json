@@ -1,0 +1,43 @@
+{
+  "system_name": "Multi-Repo Agentic Loop",
+  "version": "1.0.0",
+  "workspace_root": "d:/lnn-mobile-weather",
+  "rules": {
+    "auto_resume": true,
+    "zero_false_positives": true,
+    "mandatory_logging": true,
+    "rules_file": "AGENTS.md",
+    "state_file": ".agent/state.json"
+  },
+  "repositories": [
+    {
+      "name": "improve",
+      "url": "https://github.com/shadcn/improve.git",
+      "path": "repos/improve"
+    },
+    {
+      "name": "ponytail",
+      "url": "https://github.com/DietrichGebert/ponytail.git",
+      "path": "repos/ponytail"
+    },
+    {
+      "name": "obsidian-mind",
+      "url": "https://github.com/breferrari/obsidian-mind.git",
+      "path": "repos/obsidian-mind"
+    },
+    {
+      "name": "openscience",
+      "url": "https://github.com/synthetic-sciences/openscience.git",
+      "path": "repos/openscience"
+    }
+  ],
+  "verifier": {
+    "engine": ".agent/verifier/runner.py",
+    "log_dir": ".agent/logs"
+  },
+  "skills": {
+    "fullstack": ".agent/skills/fullstack.py",
+    "security": ".agent/skills/security.py",
+    "accessibility": ".agent/skills/accessibility.py"
+  }
+}
