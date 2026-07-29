@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">KloudAlert</string>
+    <string name="title_activity_main">KloudAlert</string>
+    <string name="package_name">com.kloudalert.app</string>
+    <string name="custom_url_scheme">com.kloudalert.app</string>
+</resources>

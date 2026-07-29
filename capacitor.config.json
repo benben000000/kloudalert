@@ -1,0 +1,15 @@
+{
+  "appId": "com.kloudalert.app",
+  "appName": "KloudAlert",
+  "webDir": "web_app",
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_icon_config_sample",
+      "iconColor": "#4A90D9",
+      "sound": "beep.wav"
+    }
+  }
+}

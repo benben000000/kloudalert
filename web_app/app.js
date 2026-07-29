@@ -1,10 +1,11 @@
 /**
  * KloudAlert Mobile Weather & Event Alert App
  * 100% Real-Time Data Engine - Event-Triggered Alert Engine
+ * - Native Capacitor Background Idle Notifications (@capacitor/local-notifications)
  * - Dynamic weather-driven backgrounds from live Open-Meteo API
  * - Real ONNX Runtime Web WASM client-side neural inference
  * - Real HTML5 Geolocation tracking & reverse geocoding
- * - Web Audio API severity alarm synthesizer
+ * - Web Audio API & Native Device Vibration/Alarms
  * - Mobile bottom-sheet gestures & backdrop tap-outside dismiss
  */
 
@@ -93,7 +94,45 @@ function getConditionText(code, precip) {
 }
 
 // ==========================================================================
-// 2. REAL CLIENT-SIDE ONNX RUNTIME WEB INFERENCE
+// 2. NATIVE CAPACITOR BACKGROUND NOTIFICATIONS & ALARMS (IDLE / LOCKED PHONE)
+// ==========================================================================
+async function initNativeNotifications() {
+    if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.LocalNotifications) {
+        try {
+            const perm = await window.Capacitor.Plugins.LocalNotifications.requestPermissions();
+            console.log('[NATIVE NOTIFICATIONS] Permission status:', perm);
+        } catch (e) {
+            console.warn('[NATIVE NOTIFICATIONS] Error requesting permission:', e);
+        }
+    }
+}
+
+async function sendNativeBackgroundNotification(title, bodyText, severity) {
+    if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.LocalNotifications) {
+        try {
+            await window.Capacitor.Plugins.LocalNotifications.schedule({
+                notifications: [
+                    {
+                        title: title,
+                        body: bodyText,
+                        id: Math.floor(Math.random() * 100000),
+                        schedule: { at: new Date(Date.now() + 100) },
+                        sound: severity === 'SEVERE' ? 'alarm.wav' : null,
+                        attachments: null,
+                        actionTypeId: '',
+                        extra: null
+                    }
+                ]
+            });
+            console.log('[NATIVE NOTIFICATIONS] Scheduled background notification successfully.');
+        } catch (e) {
+            console.warn('[NATIVE NOTIFICATIONS] Schedule failed:', e);
+        }
+    }
+}
+
+// ==========================================================================
+// 3. REAL CLIENT-SIDE ONNX RUNTIME WEB INFERENCE
 // ==========================================================================
 async function initONNXEngine() {
     try {
@@ -129,7 +168,7 @@ async function runNeuralInference(featureSequence) {
 }
 
 // ==========================================================================
-// 3. REAL BROWSER HTML5 GEOLOCATION & REVERSE GEOCODING
+// 4. REAL BROWSER HTML5 GEOLOCATION & REVERSE GEOCODING
 // ==========================================================================
 function initGeolocation() {
     if (!('geolocation' in navigator)) return;
@@ -160,7 +199,7 @@ async function reverseGeocode(lat, lon) {
 }
 
 // ==========================================================================
-// 4. REAL LIVE WEATHER API INGESTION
+// 5. REAL LIVE WEATHER API INGESTION
 // ==========================================================================
 async function fetchWeather() {
     try {
@@ -215,7 +254,7 @@ function heatIndex(T, RH) {
 }
 
 // ==========================================================================
-// 5. UPDATE UI
+// 6. UPDATE UI
 // ==========================================================================
 function updateUI() {
     setText('temp-num', currentTemp || '--');
@@ -254,9 +293,12 @@ function setText(id, val) {
 }
 
 // ==========================================================================
-// 6. AUDIO SYNTHESIS
+// 7. AUDIO SYNTHESIS & VIBRATION
 // ==========================================================================
 function playSound(severity) {
+    if (navigator.vibrate) {
+        navigator.vibrate(severity === 'SEVERE' ? [300, 100, 300, 100, 300] : [200, 100, 200]);
+    }
     const sw = document.getElementById('audio-switch');
     if (!sw || !sw.checked) return;
     try {
@@ -289,7 +331,7 @@ function playSound(severity) {
 }
 
 // ==========================================================================
-// 7. REAL ALERT SYSTEM (TRIGGERED EXCLUSIVELY BY LIVE SENSOR ANOMALIES)
+// 8. REAL ALERT SYSTEM & NATIVE PUSH TRIGGER
 // ==========================================================================
 function triggerRealAlert(type, livePrecip) {
     const onset = 15, dur = 25;
@@ -302,6 +344,13 @@ function triggerRealAlert(type, livePrecip) {
     updateUI();
     showModal(currentAnomalyInfo);
     playSound(sev);
+
+    // Trigger Native Android Background Notification (for idle/locked phone)
+    sendNativeBackgroundNotification(
+        '🌧️ ' + title,
+        'Rain anomaly detected in your area. Rain starting in ' + onset + ' mins.',
+        sev
+    );
 }
 
 function showModal(info) {
@@ -389,7 +438,7 @@ function hideModal() {
 }
 
 // ==========================================================================
-// 8. PWA SERVICE WORKER
+// 9. PWA SERVICE WORKER
 // ==========================================================================
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -398,7 +447,7 @@ if ('serviceWorker' in navigator) {
 }
 
 // ==========================================================================
-// 9. INIT & EVENT LISTENERS
+// 10. INIT & EVENT LISTENERS
 // ==========================================================================
 document.addEventListener('DOMContentLoaded', () => {
     function tick() {
@@ -440,7 +489,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Init systems with ZERO demo timers
+    // Init native systems
+    initNativeNotifications();
     initONNXEngine();
     initGeolocation();
     fetchWeather();

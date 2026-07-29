@@ -5,6 +5,12 @@ __pycache__/
 *.pyd
 .pytest_cache/
 
+# Node & Gradle Build
+node_modules/
+.gradle/
+android/app/build/
+android/.gradle/
+
 # IDE & OS
 .vscode/
 .idea/
