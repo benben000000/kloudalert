@@ -1,0 +1,22 @@
+{
+    "name": "KloudAlert Weather & Event Alerts",
+    "short_name": "KloudAlert",
+    "description": "Real-time, hyper-localized weather monitoring and event-triggered alerts for Bataan communities.",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#091322",
+    "theme_color": "#4A90D9",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "logo_icon.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "logo_icon.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="description" content="KloudAlert - Real-time hyper-localized weather monitoring & event-triggered alerts for Bataan.">
+    <title>KloudAlert</title>
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4A90D9" id="meta-theme-color">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="logo.png">
+
+    <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Dynamic Time-of-Day Weather Background -->
+    <div class="weather-bg" id="weather-bg">
+        <div class="weather-bg-layer weather-bg-gradient" id="bg-gradient"></div>
+        <div class="weather-bg-layer weather-bg-stars" id="bg-stars"></div>
+        <div class="weather-bg-layer weather-bg-sun-rays" id="bg-sun-rays"></div>
+        <div class="weather-bg-layer weather-bg-clouds" id="bg-clouds">
+            <div class="real-cloud cloud-far">
+                <div class="c-puff p1"></div><div class="c-puff p2"></div><div class="c-puff p3"></div><div class="c-puff p4"></div>
+            </div>
+            <div class="real-cloud cloud-mid">
+                <div class="c-puff p1"></div><div class="c-puff p2"></div><div class="c-puff p3"></div><div class="c-puff p4"></div><div class="c-puff p5"></div>
+            </div>
+            <div class="real-cloud cloud-fore">
+                <div class="c-puff p1"></div><div class="c-puff p2"></div><div class="c-puff p3"></div><div class="c-puff p4"></div>
+            </div>
+        </div>
+        <div class="weather-bg-layer weather-bg-rain" id="bg-rain">
+            <div class="rain-drop d1"></div>
+            <div class="rain-drop d2"></div>
+            <div class="rain-drop d3"></div>
+        </div>
+    </div>
+
+    <!-- Mobile App Shell -->
+    <div class="app-shell" id="app-shell">
+
+        <!-- Scrollable Content Area -->
+        <div class="app-content" id="app-content">
+
+            <!-- Header with Kloudtech Logo -->
+            <header class="app-header">
+                <div class="header-brand">
+                    <img src="logo_icon.png" alt="Kloudtech" class="brand-logo" width="28" height="28">
+                    <span class="brand-name"><span class="brand-k">Kloud</span><span class="brand-t">Alert</span></span>
+                </div>
+                <div class="header-actions">
+                    <button class="settings-btn" id="btn-open-settings" title="Settings & OTA Updates" aria-label="Settings">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                        <span class="update-badge-dot hidden" id="header-update-dot"></span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Live Weather Station Selector Bar -->
+            <div class="station-selector-wrapper">
+                <svg class="loc-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <select id="station-picker" class="station-picker-select" aria-label="Select Weather Station">
+                    <option value="Rjz2dbXW" selected>Popolon AWS - Palayan City</option>
+                    <option value="4VAl2p9k">Sapang Buho AWS - Palayan City</option>
+                    <option value="3nzr8bGo">Alasas AWS - San Fernando</option>
+                    <option value="O3z05pGV">Wawa Limay AWS - Bataan</option>
+                    <option value="nDbyYbR1">Sabang Morong AWS - Bataan</option>
+                    <option value="Bkpj1zRO">Old Cabalan AWS - Olongapo</option>
+                    <option value="rqAkmpKG">Barretto AWS - Olongapo</option>
+                    <option value="wkAWLzlm">Lazatin AWS - San Fernando</option>
+                    <option value="VEpdDpBK">San Luis AWS - Aurora</option>
+                    <option value="1Zb102pg">San Jose City AWS</option>
+                    <option value="xMbRYxp0">Avida Asten AWS - Makati</option>
+                    <option value="lMAZe9b3">Abucay AWS - Bataan</option>
+                    <option value="WYAejdzg">Poblacion Mariveles AWS</option>
+                    <option value="QgbGldAY">Pag-asa Bagac AWS - Bataan</option>
+                    <option value="03pqkGAj">Bongabon Water District AWS</option>
+                    <option value="3nzr48bG">Calumpit AWS - Bulacan</option>
+                    <option value="nDby4YpR">General Natividad AWS</option>
+                </select>
+            </div>
+
+            <!-- Apple/macOS Weather Style Hero Weather Card -->
+            <div class="accu-hero-card">
+                <div class="accu-hero-header">
+                    <span class="accu-station-label" id="accu-station-tag">Live Ground Telemetry</span>
+                    <span class="accu-time" id="accu-update-time">Just Now</span>
+                </div>
+
+                <div class="accu-hero-body">
+                    <div class="accu-temp-left">
+                        <div class="accu-temp-main">
+                            <span class="accu-temp-num" id="temp-num">28</span>
+                            <span class="accu-temp-deg">°</span>
+                        </div>
+                        <div class="accu-range-text">
+                            <span id="accu-temp-low">L: 24°</span>
+                            <span>•</span>
+                            <span id="accu-temp-high">H: 34°</span>
+                        </div>
+                    </div>
+                    <div class="accu-temp-right">
+                        <div class="accu-icon-glow" id="accu-weather-icon-wrapper">
+                            <svg class="accu-wicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                        </div>
+                        <span class="accu-condition" id="temp-condition">Partly Cloudy</span>
+                        <span class="accu-feels" id="temp-feels">RealFeel 34°</span>
+                    </div>
+                </div>
+
+                <!-- MinuteCast Banner -->
+                <div class="accu-minutecast-strip" id="minutecast-banner">
+                    <div class="minutecast-left">
+                        <span class="minutecast-title">MINUTECAST</span>
+                        <span class="minutecast-status" id="minutecast-status">No precipitation for at least 120 min</span>
+                    </div>
+                    <svg class="minutecast-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+                </div>
+            </div>
+
+            <!-- Actionable Weather Insight Card -->
+            <div class="action-recommendation-card" id="action-card">
+                <div class="action-card-header">
+                    <span class="action-section-title" id="action-badge">WEATHER ADVISORY</span>
+                    <span class="action-tagline" id="action-tagline">Live Guidance</span>
+                </div>
+                <div class="action-card-body">
+                    <div class="action-lead" id="action-lead">Bring an umbrella before heading outside</div>
+                    <div class="action-desc" id="action-desc">Rain starting in 15 minutes. Roads may be slippery, drive safely and stay dry.</div>
+                </div>
+            </div>
+
+            <!-- AccuWeather Hourly Forecast Slider Carousel -->
+            <div class="accu-widget-card">
+                <div class="accu-widget-header">
+                    <span class="accu-widget-title">HOURLY FORECAST</span>
+                    <span class="accu-widget-sub">24-Hour Timeline</span>
+                </div>
+                <div class="accu-hourly-carousel" id="hourly-carousel">
+                    <!-- Hourly Forecast Nodes Injected via JS -->
+                </div>
+            </div>
+
+            <!-- AccuWeather Quick Stats Grid -->
+            <div class="quick-stats">
+                <div class="qs-item">
+                    <svg class="qs-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"/></svg>
+                    <span class="qs-val" id="qs-humidity">78%</span>
+                    <span class="qs-label">Humidity</span>
+                </div>
+                <div class="qs-divider"></div>
+                <div class="qs-item">
+                    <svg class="qs-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>
+                    <span class="qs-val" id="qs-wind">4.5 km/h</span>
+                    <span class="qs-label">Wind Vector</span>
+                </div>
+                <div class="qs-divider"></div>
+                <div class="qs-item">
+                    <svg class="qs-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M16 14v6"/><path d="M8 14v6"/><path d="M12 16v6"/></svg>
+                    <span class="qs-val" id="qs-rain">0.0 mm</span>
+                    <span class="qs-label">Precipitation</span>
+                </div>
+            </div>
+
+            <!-- AccuWeather 5-Day Forecast List Widget -->
+            <div class="accu-widget-card">
+                <div class="accu-widget-header">
+                    <span class="accu-widget-title">5-DAY FORECAST</span>
+                    <span class="accu-widget-sub">Daily Overview</span>
+                </div>
+                <div class="accu-daily-list" id="daily-forecast-list">
+                    <!-- Daily Forecast Rows Injected via JS -->
+                </div>
+            </div>
+
+            <!-- Metric Cards Grid -->
+            <div class="section-label">Atmospheric Metrics</div>
+            <div class="detail-cards">
+                <div class="d-card">
+                    <div class="d-card-top">
+                        <svg class="d-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></svg>
+                        <span class="d-card-label">Heat Index</span>
+                    </div>
+                    <div class="d-card-val"><span id="d-heat-index">34</span><span class="d-card-unit">°C</span></div>
+                </div>
+                <div class="d-card">
+                    <div class="d-card-top">
+                        <svg class="d-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg>
+                        <span class="d-card-label">Barometric Pressure</span>
+                    </div>
+                    <div class="d-card-val"><span id="d-pressure">1008</span><span class="d-card-unit"> hPa</span></div>
+                </div>
+                <div class="d-card">
+                    <div class="d-card-top">
+                        <svg class="d-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M16 14v6"/><path d="M8 14v6"/><path d="M12 16v6"/></svg>
+                        <span class="d-card-label">Rain Rate</span>
+                    </div>
+                    <div class="d-card-val"><span id="d-rain-rate">0.0</span><span class="d-card-unit"> mm/h</span></div>
+                </div>
+                <div class="d-card">
+                    <div class="d-card-top">
+                        <svg class="d-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                        <span class="d-card-label">UV Index</span>
+                    </div>
+                    <div class="d-card-val"><span id="d-uv">6.2</span><span class="d-card-unit"> Moderate</span></div>
+                </div>
+            </div>
+
+            <!-- Bottom Safe Area -->
+            <div class="bottom-safe"></div>
+        </div>
+    </div>
+
+    <!-- ALERT POPUP MODAL (Mobile Bottom Sheet) -->
+    <div class="alert-overlay hidden" id="popup-alert-overlay" role="dialog" aria-modal="true">
+        <div class="alert-modal">
+            <!-- Mobile Sheet Drag Indicator Handle -->
+            <div class="sheet-handle-bar">
+                <div class="sheet-handle"></div>
+            </div>
+
+            <div class="alert-modal-header">
+                <span class="alert-modal-tag">WEATHER ALERT</span>
+                <button class="alert-modal-close" id="popup-close-x" aria-label="Close">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                </button>
+            </div>
+
+            <div class="alert-modal-banner" id="popup-upcoming-banner">
+                <span class="alert-modal-pulse"></span>
+                <span class="alert-modal-banner-text" id="popup-upcoming-lead-text">Rain Starting in 15 Minutes</span>
+            </div>
+
+            <div class="alert-modal-body">
+                <div class="countdown-container">
+                    <svg viewBox="0 0 100 100" class="countdown-svg">
+                        <circle cx="50" cy="50" r="42" class="countdown-bg"/>
+                        <circle cx="50" cy="50" r="42" class="countdown-fg" id="popup-progress-ring"/>
+                    </svg>
+                    <div class="countdown-inner">
+                        <span class="countdown-lbl" id="popup-ring-label">STARTS IN</span>
+                        <span class="countdown-val" id="popup-countdown-val">15:00</span>
+                        <span class="countdown-unit" id="popup-ring-unit">MINS</span>
+                    </div>
+                </div>
+
+                <h2 class="alert-modal-title" id="popup-title">Heavy Rain Warning</h2>
+
+                <div class="alert-modal-stats">
+                    <div class="ams"><span class="ams-l">Starts In</span><span class="ams-v" id="popup-starts-in-val">15 Mins</span></div>
+                    <div class="ams"><span class="ams-l">Duration</span><span class="ams-v" id="popup-duration-val">25 Mins</span></div>
+                    <div class="ams"><span class="ams-l">Heat Index</span><span class="ams-v ams-warn" id="popup-feels-val">38°C</span></div>
+                </div>
+            </div>
+
+            <button class="alert-modal-dismiss" id="btn-dismiss-popup">Dismiss</button>
+        </div>
+    </div>
+
+    <!-- SETTINGS & OTA UPDATES DRAWER MODAL -->
+    <div class="alert-overlay hidden" id="settings-overlay" role="dialog" aria-modal="true">
+        <div class="alert-modal settings-modal">
+            <div class="sheet-handle-bar"><div class="sheet-handle"></div></div>
+            <div class="alert-modal-header">
+                <span class="alert-modal-tag">SETTINGS & OTA ENGINE</span>
+                <button class="alert-modal-close" id="settings-close-x" aria-label="Close">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                </button>
+            </div>
+            
+            <div class="settings-body">
+                <div class="settings-group">
+                    <span class="settings-label">Neural Model Architecture</span>
+                    <span class="settings-val-text">Liquid Foundation Model (LFM-230M)</span>
+                </div>
+
+                <div class="settings-group">
+                    <span class="settings-label">Current Version Tag</span>
+                    <span class="settings-val-text" id="ota-current-version-tag">v1.0.0-initial</span>
+                </div>
+
+                <!-- 1-TAP OTA UPDATE BUTTON (DYNAMICALLY DISPLAYED IF UPDATE IS AVAILABLE) -->
+                <div class="ota-container hidden" id="ota-update-container">
+                    <div class="ota-alert-card">
+                        <div class="ota-title">Upgraded Neural Model Available</div>
+                        <div class="ota-desc">A new self-trained ONNX model weight checkpoint is ready for deployment.</div>
+                        <button class="btn-ota-update" id="btn-ota-update">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            <span>1-Tap Hot-Swap Update</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="ota-up-to-date hidden" id="ota-up-to-date-box">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    <span>Neural Model is Up to Date</span>
+                </div>
+
+                <div class="settings-toast hidden" id="ota-update-toast"></div>
+
+                <!-- OPEN SOURCE CREDITS & DATA ATTRIBUTION -->
+                <div class="credits-section">
+                    <div class="credits-title">Open-Source Credits & Data Sources</div>
+                    <div class="credits-list">
+                        <div class="credit-item">
+                            <span class="credit-name">Open-Meteo API</span>
+                            <span class="credit-desc">Free Weather Telemetry & Global Forecast Data</span>
+                        </div>
+                        <div class="credit-item">
+                            <span class="credit-name">PyTorch & ONNX Runtime</span>
+                            <span class="credit-desc">Liquid Neural Network & WASM Edge Engine</span>
+                        </div>
+                        <div class="credit-item">
+                            <span class="credit-name">Firebase Cloud Firestore</span>
+                            <span class="credit-desc">Realtime Probe Telemetry & OTA Version Store</span>
+                        </div>
+                        <div class="credit-item">
+                            <span class="credit-name">Capacitor & Android SDK</span>
+                            <span class="credit-desc">Native Android Container & Widget Runtime</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="alert-modal-dismiss" id="btn-close-settings">Close Settings</button>
+        </div>
+    </div>
+
+    <div id="log-console" style="display:none;"></div>
+    <script src="app.js"></script>
+</body>
+</html>
