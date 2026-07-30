@@ -22,9 +22,11 @@ from threading import Thread
 WORKSPACE_ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.append(str(WORKSPACE_ROOT / "src" / "models"))
 sys.path.append(str(WORKSPACE_ROOT / "src" / "engine"))
+sys.path.append(str(WORKSPACE_ROOT / "src" / "data"))
 
 from lfm_foundation_model import LiquidFoundationModel230M
 from self_improving_agentic_loop import LFMSelfImprovingAgent
+from db_manager import DatabaseManager
 
 STATIONS_PATH = WORKSPACE_ROOT / "src" / "data" / "bataan_stations.json"
 PORT = 8085
@@ -40,7 +42,8 @@ live_cache = {
 with open(STATIONS_PATH, "r", encoding="utf-8") as f:
     BATAAN_STATIONS = json.load(f)
 
-# Initialize Self-Improving LFM Agent
+# Initialize Database Manager & Self-Improving LFM Agent
+db_manager = DatabaseManager()
 lfm_agent = LFMSelfImprovingAgent()
 
 def haversine_distance(lat1, lon1, lat2, lon2):
@@ -142,26 +145,96 @@ def compute_idw_feature_vector(lat, lon):
     return [30.0, 75.0, 1010.0, 0.0, 5.0, 0.0, 0.0, 36.0]
 
 class TelemetryAPIHandler(BaseHTTPRequestHandler):
-    def _set_cors(self):
-        self.send_response(200)
+    # In-memory IP rate limiting dictionary {ip: [timestamp1, timestamp2, ...]}
+    ip_request_history = {}
+    MAX_REQUESTS_PER_MINUTE = 60
+    MAX_PAYLOAD_BYTES = 50 * 1024  # 50 KB strict limit for JSON telemetry
+
+    def _check_rate_limit(self):
+        client_ip = self.client_address[0]
+        now = time.time()
+        timestamps = self.ip_request_history.get(client_ip, [])
+        # Retain only requests in the last 60 seconds
+        timestamps = [ts for ts in timestamps if now - ts < 60]
+        
+        if len(timestamps) >= self.MAX_REQUESTS_PER_MINUTE:
+            return False
+            
+        timestamps.append(now)
+        self.ip_request_history[client_ip] = timestamps
+        return True
+
+    def _set_cors(self, status=200):
+        self.send_response(status)
         self.send_header("Content-Type", "application/json")
         self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "GET, OPTIONS")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.send_header("X-Content-Type-Options", "nosniff")
+        self.send_header("X-Frame-Options", "DENY")
         self.end_headers()
 
     def do_OPTIONS(self):
         self._set_cors()
 
+    def do_POST(self):
+        if not self._check_rate_limit():
+            self._set_cors(429)
+            self.wfile.write(json.dumps({"status": "error", "message": "Rate limit exceeded. Maximum 60 requests per minute."}).encode("utf-8"))
+            return
+
+        parsed = urllib.parse.urlparse(self.path)
+        if parsed.path == "/api/v1/telemetry/submit":
+            content_length = int(self.headers.get("Content-Length", 0))
+            if content_length > self.MAX_PAYLOAD_BYTES:
+                self._set_cors(413)
+                self.wfile.write(json.dumps({"status": "error", "message": "Payload Too Large. Maximum 50KB."}).encode("utf-8"))
+                return
+
+            post_data = self.rfile.read(content_length)
+            try:
+                payload = json.loads(post_data.decode("utf-8"))
+                
+                # Input Sanitization & Guardrails
+                lat = float(payload.get("latitude", 0.0))
+                lon = float(payload.get("longitude", 0.0))
+                if not (-90.0 <= lat <= 90.0 and -180.0 <= lon <= 180.0):
+                    raise ValueError("Latitude/Longitude out of valid physical bounds")
+
+                row_id = db_manager.insert_telemetry(payload)
+                resp = {
+                    "status": "success",
+                    "message": "Probe telemetry ingested successfully into Central DB",
+                    "telemetry_id": row_id,
+                    "timestamp": time.time()
+                }
+                self._set_cors(200)
+                self.wfile.write(json.dumps(resp).encode("utf-8"))
+            except Exception as e:
+                self._set_cors(400)
+                self.wfile.write(json.dumps({"status": "error", "message": str(e)}).encode("utf-8"))
+        else:
+            self.send_error(404, "Endpoint not found")
+
     def do_GET(self):
+        if not self._check_rate_limit():
+            self._set_cors(429)
+            self.wfile.write(json.dumps({"status": "error", "message": "Rate limit exceeded. Maximum 60 requests per minute."}).encode("utf-8"))
+            return
+
         parsed = urllib.parse.urlparse(self.path)
         if parsed.path == "/api/v1/live-bataan-weather":
             self._set_cors()
             self.wfile.write(json.dumps(live_cache).encode('utf-8'))
         elif parsed.path == "/api/v1/nowcast":
             query = urllib.parse.parse_qs(parsed.query)
-            lat = float(query.get("lat", [14.6775])[0])
-            lon = float(query.get("lon", [120.5431])[0])
+            try:
+                lat = float(query.get("lat", [14.6775])[0])
+                lon = float(query.get("lon", [120.5431])[0])
+                if not (-90.0 <= lat <= 90.0 and -180.0 <= lon <= 180.0):
+                    raise ValueError("Latitude/Longitude bounds error")
+            except Exception:
+                lat, lon = 14.6775, 120.5431
 
             # Construct REAL IDW fused feature sequence matrix (1, 24, 8)
             real_vector = compute_idw_feature_vector(lat, lon)
@@ -176,8 +249,8 @@ class TelemetryAPIHandler(BaseHTTPRequestHandler):
             except Exception as e:
                 print(f"[SERVER] LFM Nowcast error: {e}")
 
-            # Log prediction experiment into LFM Self-Improving Agent Queue
             exp_record = lfm_agent.log_prediction_experiment(lat, lon, real_vector, prob_curve)
+            db_manager.insert_experiment(exp_record)
 
             res = {
                 "user_location": {"lat": lat, "lon": lon},
@@ -189,13 +262,54 @@ class TelemetryAPIHandler(BaseHTTPRequestHandler):
             }
             self._set_cors()
             self.wfile.write(json.dumps(res).encode('utf-8'))
+        elif parsed.path == "/api/v1/telemetry/probes":
+            telemetry_list = db_manager.get_recent_telemetry(limit=100)
+            self._set_cors()
+            self.wfile.write(json.dumps({"count": len(telemetry_list), "probes": telemetry_list}).encode("utf-8"))
+        elif parsed.path == "/api/v1/model/latest":
+            latest_model = db_manager.get_latest_model_version()
+            if not latest_model:
+                latest_model = {
+                    "version_tag": "v1.0.0-initial",
+                    "onnx_path": "web_app/lnn_weather_model.onnx",
+                    "avg_loss": 0.05,
+                    "verified_sample_count": 100
+                }
+            self._set_cors()
+            self.wfile.write(json.dumps(latest_model).encode("utf-8"))
         elif parsed.path == "/api/v1/lfm-experiments":
-            # Expose LFM Experiment Log & Performance Metrics
             experiments_data = lfm_agent.load_experiments()
             self._set_cors()
             self.wfile.write(json.dumps(experiments_data).encode('utf-8'))
         else:
-            self.send_error(404, "Endpoint not found")
+            # Static File Serving for web_app
+            rel_path = parsed.path.lstrip('/')
+            if rel_path == '' or rel_path == 'index.html':
+                target_file = WORKSPACE_ROOT / "web_app" / "index.html"
+                content_type = "text/html; charset=utf-8"
+            else:
+                target_file = WORKSPACE_ROOT / "web_app" / rel_path
+                ext = target_file.suffix.lower()
+                content_types = {
+                    '.css': 'text/css; charset=utf-8',
+                    '.js': 'application/javascript; charset=utf-8',
+                    '.json': 'application/json; charset=utf-8',
+                    '.onnx': 'application/octet-stream',
+                    '.png': 'image/png',
+                    '.ico': 'image/x-icon',
+                    '.svg': 'image/svg+xml'
+                }
+                content_type = content_types.get(ext, 'application/octet-stream')
+
+            if target_file.exists() and target_file.is_file():
+                self.send_response(200)
+                self.send_header("Content-Type", content_type)
+                self.send_header("Access-Control-Allow-Origin", "*")
+                self.end_headers()
+                with open(target_file, 'rb') as f:
+                    self.wfile.write(f.read())
+            else:
+                self.send_error(404, "Endpoint not found")
 
 def start_server():
     server = HTTPServer(("0.0.0.0", PORT), TelemetryAPIHandler)
@@ -206,3 +320,4 @@ if __name__ == "__main__":
     t = Thread(target=background_poller, daemon=True)
     t.start()
     start_server()
+

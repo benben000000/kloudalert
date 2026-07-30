@@ -1,20 +1,125 @@
 {
-  "province": "Bataan",
-  "country": "Philippines",
-  "country_code": "PH",
-  "timezone": "Asia/Manila",
+  "source": "KloudTrack Live API Dashboard",
+  "station_count": 17,
   "stations": [
-    { "id": "AWS-BALANGA", "name": "Balanga City (Capital)", "type": "City", "lat": 14.6775, "lon": 120.5431, "elevation_m": 12.0 },
-    { "id": "AWS-MARIVELES", "name": "Mariveles (FAB Zone)", "type": "Municipality", "lat": 14.4333, "lon": 120.4833, "elevation_m": 25.0 },
-    { "id": "AWS-DINALUPIHAN", "name": "Dinalupihan (North Inland)", "type": "Municipality", "lat": 14.8783, "lon": 120.4633, "elevation_m": 45.0 },
-    { "id": "AWS-HERMOSA", "name": "Hermosa", "type": "Municipality", "lat": 14.8322, "lon": 120.5050, "elevation_m": 18.0 },
-    { "id": "AWS-ORANI", "name": "Orani", "type": "Municipality", "lat": 14.8000, "lon": 120.5333, "elevation_m": 15.0 },
-    { "id": "AWS-SAMAL", "name": "Samal", "type": "Municipality", "lat": 14.7667, "lon": 120.5500, "elevation_m": 10.0 },
-    { "id": "AWS-ABUCAY", "name": "Abucay", "type": "Municipality", "lat": 14.7214, "lon": 120.5317, "elevation_m": 14.0 },
-    { "id": "AWS-PILAR", "name": "Pilar (Mt. Samat Sector)", "type": "Municipality", "lat": 14.6644, "lon": 120.5606, "elevation_m": 20.0 },
-    { "id": "AWS-ORION", "name": "Orion", "type": "Municipality", "lat": 14.6189, "lon": 120.5822, "elevation_m": 8.0 },
-    { "id": "AWS-LIMAY", "name": "Limay (Industrial Coast)", "type": "Municipality", "lat": 14.5619, "lon": 120.5989, "elevation_m": 16.0 },
-    { "id": "AWS-BAGAC", "name": "Bagac (West Coast)", "type": "Municipality", "lat": 14.6033, "lon": 120.3922, "elevation_m": 30.0 },
-    { "id": "AWS-MORONG", "name": "Morong (Northwest Coast)", "type": "Municipality", "lat": 14.6797, "lon": 120.2644, "elevation_m": 22.0 }
+    {
+      "id": "Rjz2dbXW",
+      "name": "Popolon AWS - Palayan City",
+      "address": "Manacnac, Palayan City, Nueva Ecija, Philippines",
+      "lon": 121.05767,
+      "lat": 15.53683
+    },
+    {
+      "id": "4VAl2p9k",
+      "name": "Sapang Buho AWS - Palayan City",
+      "address": "Imelda Valley-Sapang Buho Road Popolon Pagas, Palayan City, Nueva Ecija, Philippines",
+      "lon": 121.12331,
+      "lat": 15.58819
+    },
+    {
+      "id": "3nzr8bGo",
+      "name": "Alasas AWS - San Fernando City",
+      "address": "San Isidro, San Fernando, Pampanga, Philippines",
+      "lon": 120.645961,
+      "lat": 15.058594
+    },
+    {
+      "id": "O3z05pGV",
+      "name": "Wawa Limay AWS - Bataan",
+      "address": "Rizal Street Wawa, Limay, Bataan, Philippines",
+      "lon": 120.598676,
+      "lat": 14.562386
+    },
+    {
+      "id": "nDbyYbR1",
+      "name": "Sabang Morong AWS - Bataan",
+      "address": "Bernabe Road Sabang, Morong, Bataan, Philippines",
+      "lon": 120.249759,
+      "lat": 14.696852
+    },
+    {
+      "id": "Bkpj1zRO",
+      "name": "Old Cabalan AWS - Olongapo City",
+      "address": "Apitong Extension New Cabalan, Olongapo, Philippines",
+      "lon": 120.313433,
+      "lat": 14.849127
+    },
+    {
+      "id": "rqAkmpKG",
+      "name": "Barretto AWS - Olongapo City",
+      "address": "Ifugao Street Mabayuan, Olongapo, Philippines",
+      "lon": 120.262945,
+      "lat": 14.851747
+    },
+    {
+      "id": "wkAWLzlm",
+      "name": "Lazatin AWS - San Fernando City",
+      "address": "Lazatin, San Fernando, Pampanga, Philippines",
+      "lon": 120.678156,
+      "lat": 15.029
+    },
+    {
+      "id": "VEpdDpBK",
+      "name": "San Luis AWS - Aurora [Under Maintenance]",
+      "address": "Nueva Ecija-Aurora Road Ditumabo, San Luis, Aurora, Philippines",
+      "lon": 121.465426,
+      "lat": 15.699382
+    },
+    {
+      "id": "1Zb102pg",
+      "name": "San Jose City AWS",
+      "address": "A.D. Bautista Street Ferdinand E. Marcos Poblacion, San Jose City, Nueva Ecija, Philippines",
+      "lon": 120.993156,
+      "lat": 15.794954
+    },
+    {
+      "id": "xMbRYxp0",
+      "name": "Avida Asten AWS - Makati City",
+      "address": "Yakal Street, Barangay San Antonio,  Makati City",
+      "lon": 121.008234,
+      "lat": 14.559697
+    },
+    {
+      "id": "lMAZe9b3",
+      "name": "Abucay AWS - Bataan",
+      "address": "Dominican Hills Avenue Laon, Abucay, Bataan, Philippines",
+      "lon": 120.495925,
+      "lat": 14.719123
+    },
+    {
+      "id": "WYAejdzg",
+      "name": "Poblacion Mariveles AWS - Bataan",
+      "address": "P. Roman Boulevard Poblacion, Mariveles, Bataan, Philippines",
+      "lon": 120.490301,
+      "lat": 14.43601
+    },
+    {
+      "id": "QgbGldAY",
+      "name": "Pag-asa Bagac AWS - Bataan",
+      "address": "Camacho Street Ibaba, Bagac, Bataan, Philippines",
+      "lon": 120.39407,
+      "lat": 14.600605
+    },
+    {
+      "id": "03pqkGAj",
+      "name": "Bongabon Water District AWS - Nueva Ecija",
+      "address": "Lusok, Bongabon, Nueva Ecija, Philippines",
+      "lon": 121.139164,
+      "lat": 15.599961
+    },
+    {
+      "id": "3nzr48bG",
+      "name": "Calumpit AWS - Bulacan",
+      "address": "Provincial Rd, Calumpit, Bulacan, Philippines",
+      "lon": 120.764747,
+      "lat": 14.914605
+    },
+    {
+      "id": "nDby4YpR",
+      "name": "General Natividad AWS - Nueva Ecija",
+      "address": "Poblacion, General Mamerto Natividad, Nueva Ecija, Philippines",
+      "lon": 121.049863,
+      "lat": 15.602308
+    }
   ]
 }

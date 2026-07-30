@@ -1,0 +1,2202 @@
+{
+  "metadata": {
+    "source": "KloudTrack Official Live Production API",
+    "base_url": "https://api.kloudtechsea.com/api/v1",
+    "station_count": 17,
+    "ingestion_timestamp": "2026-07-30 22:45:21"
+  },
+  "stations": {
+    "Rjz2dbXW": {
+      "station_info": {
+        "id": "Rjz2dbXW",
+        "name": "Popolon AWS - Palayan City"
+      },
+      "telemetry": [
+        {
+          "id": 4951668,
+          "recordedAt": "2026-07-30T14:00:00.000Z",
+          "heatIndex": 28.200444444444443,
+          "temperature": 25.946214444444447,
+          "humidity": 98.8166828888889,
+          "pressure": 1007.0473777777777,
+          "wind": {
+            "direction": 145.55401333333333,
+            "speed": 0.5640620444444443
+          },
+          "precipitation": 0,
+          "uvIndex": null,
+          "distance": null,
+          "lightIntensity": 0.3333331999999999
+        },
+        {
+          "id": 4950855,
+          "recordedAt": "2026-07-30T13:00:00.000Z",
+          "heatIndex": 27.373666666666672,
+          "temperature": 25.678940666666662,
+          "humidity": 98.69689499999998,
+          "pressure": 1007.0838499999998,
+          "wind": {
+            "direction": 113.16914500000001,
+            "speed": 0.14213840350877194
+          },
+          "precipitation": 0,
+          "uvIndex": null,
+          "distance": null,
+          "lightIntensity": 0.833333000000001
+        },
+        {
+          "id": 4950064,
+          "recordedAt": "2026-07-30T12:00:00.000Z",
+          "heatIndex": 27.734333333333325,
+          "temperature": 25.802746833333334,
+          "humidity": 97.94094750000001,
+          "pressure": 1006.2625166666668,
+          "wind": {
+            "direction": 141.4354,
+            "speed": 0.008731338983050847
+          },
+          "precipitation": 0,
+          "uvIndex": null,
+          "distance": null,
+          "lightIntensity": 0.833333000000001
+        },
+        {
+          "id": 4949247,
+          "recordedAt": "2026-07-30T11:00:00.000Z",
+          "heatIndex": 28.74533333333333,
+          "temperature": 26.144402666666668,
+          "humidity": 97.05776733333333,
+          "pressure": 1005.6125166666668,
+          "wind": {
+            "direction": 132.1470683333333,
+            "speed": 0
+          },
+          "precipitation": 0,
+          "uvIndex": null,
+          "distance": null,
+          "lightIntensity": 0.833333000000001
+        },
+        {
+          "id": 4948412,
+          "recordedAt": "2026-07-30T10:00:00.000Z",
+          "heatIndex": 31.65066666666667,
+          "temperature": 27.13407783333334,
+          "humidity": 94.51004499999996,
+          "pressure": 1005.1736833333333,
+          "wind": {
+            "direction": 135.76470166666667,
+            "speed": 0.31299193333333336
+          },
+          "precipitation": 0,
+          "uvIndex": null,
+          "distance": null,
+          "lightIntensity": 315.29166451666674
+        },
+        {
+          "id": 4947576,
+          "recordedAt": "2026-07-30T09:00:00.000Z",
+          "heatIndex": 34.98283333333333,
+          "temperature": 28.262003333333343,
+          "humidity": 92.0066368333333,
+          "pressure": 1004.4509999999998,
+          "wind": {
+            "direction": 153.16308999999995,
+            "speed": 1.2043556833333333
+          },
+          "precipitation": 0,
+          "uvIndex": 0.9130434782608695,
+          "distance": null,
+          "lightIntensity": 4966.569483333335
+        },
+        {
+          "id": 4946772,
+          "recordedAt": "2026-07-30T08:00:00.000Z",
+          "heatIndex": 37.60000000000001,
+          "temperature": 29.004711,
+          "humidity": 91.9109383333333,
+          "pressure": 1003.9739999999998,
+          "wind": {
+            "direction": 148.26589983333332,
+            "speed": 2.0442044833333335
+          },
+          "precipitation": 0,
+          "uvIndex": 2.933333333333333,
+          "distance": null,
+          "lightIntensity": 10826.291166666668
+        },
+        {
+          "id": 4945954,
+          "recordedAt": "2026-07-30T07:00:00.000Z",
+          "heatIndex": 38.44883333333333,
+          "temperature": 29.25823066666666,
+          "humidity": 91.64259566666668,
+          "pressure": 1004.2392500000003,
+          "wind": {
+            "direction": 37.009426500000004,
+            "speed": 0.7196474333333334
+          },
+          "precipitation": 0,
+          "uvIndex": 4.9,
+          "distance": null,
+          "lightIntensity": 15043.416666666662
+        },
+        {
+          "id": 4945114,
+          "recordedAt": "2026-07-30T06:00:00.000Z",
+          "heatIndex": 38.05566666666667,
+          "temperature": 29.137580833333324,
+          "humidity": 91.67364700000002,
+          "pressure": 1004.4343166666665,
+          "wind": {
+            "direction": 64.83289333333333,
+            "speed": 1.1739150333333335
+          },
+          "precipitation": 0,
+          "uvIndex": 7.133333333333334,
+          "distance": null,
+          "lightIntensity": 19508.08366666667
+        },
+        {
+          "id": 4944274,
+          "recordedAt": "2026-07-30T05:00:00.000Z",
+          "heatIndex": 37.40133333333333,
+          "temperature": 28.80781316666667,
+          "humidity": 94.10534033333332,
+          "pressure": 1004.447833333333,
+          "wind": {
+            "direction": 124.2875613333333,
+            "speed": 1.4463195499999992
+          },
+          "precipitation": 0,
+          "uvIndex": 7.216666666666667,
+          "distance": null,
+          "lightIntensity": 20109.915338983057
+        },
+        {
+          "id": 4943437,
+          "recordedAt": "2026-07-30T04:00:00.000Z",
+          "heatIndex": 42.75033333333336,
+          "temperature": 30.550727333333338,
+          "humidity": 89.72479116666668,
+          "pressure": 1004.8604999999999,
+          "wind": {
+            "direction": 103.23419673333335,
+            "speed": 1.3183128999999998
+          },
+          "precipitation": 0.7693,
+          "uvIndex": 6.545454545454546,
+          "distance": null,
+          "lightIntensity": 23198.70038983052
+        },
+        {
+          "id": 4942597,
+          "recordedAt": "2026-07-30T03:00:00.000Z",
+          "heatIndex": 44.34083333333336,
+          "temperature": 31.079675833333322,
+          "humidity": 88.34290866666667,
+          "pressure": 1005.4398166666665,
+          "wind": {
+            "direction": 172.47353176666664,
+            "speed": 2.568600711864407
+          },
+          "precipitation": 0,
+          "uvIndex": 11,
+          "distance": null,
+          "lightIntensity": 50548.713559322045
+        },
+        {
+          "id": 4941763,
+          "recordedAt": "2026-07-30T02:00:00.000Z",
+          "heatIndex": 40.87699999999999,
+          "temperature": 30.00992016666667,
+          "humidity": 90.3238476666667,
+          "pressure": 1005.9892000000001,
+          "wind": {
+            "direction": 248.8252354666668,
+            "speed": 2.080889416666666
+          },
+          "precipitation": 0,
+          "uvIndex": 10.885714285714286,
+          "distance": null,
+          "lightIntensity": 48524.513000000006
+        },
+        {
+          "id": 4940931,
+          "recordedAt": "2026-07-30T01:00:00.000Z",
+          "heatIndex": 36.824999999999996,
+          "temperature": 28.75743900000001,
+          "humidity": 92.42801533333335,
+          "pressure": 1006.2439000000002,
+          "wind": {
+            "direction": 235.87356536666664,
+            "speed": 1.714040866666667
+          },
+          "precipitation": 0,
+          "uvIndex": 10.766666666666667,
+          "distance": null,
+          "lightIntensity": 42187.94383333334
+        },
+        {
+          "id": 4940105,
+          "recordedAt": "2026-07-30T00:00:00.000Z",
+          "heatIndex": 29.827333333333335,
+          "temperature": 26.473319166666666,
+          "humidity": 97.32309666666664,
+          "pressure": 1006.0944499999999,
+          "wind": {
+            "direction": 21.45874016666667,
+            "speed": 0.36762904999999985
+          },
+          "precipitation": 0,
+          "uvIndex": 8.45,
+          "distance": null,
+          "lightIntensity": 32673.123333333344
+        }
+      ]
+    },
+    "4VAl2p9k": {
+      "station_info": {
+        "id": "4VAl2p9k",
+        "name": "Sapang Buho AWS - Palayan City"
+      },
+      "telemetry": [
+        {
+          "id": 4951679,
+          "recordedAt": "2026-07-30T14:00:00.000Z",
+          "heatIndex": 27.841111111111104,
+          "temperature": 25.84777511111111,
+          "humidity": 96.82785681818181,
+          "pressure": 1005.3262888888889,
+          "wind": {
+            "direction": 288.70508222222225,
+            "speed": 0
+          },
+          "precipitation": 0,
+          "uvIndex": null,
+          "distance": null,
+          "lightIntensity": 0
+        },
+        {
+          "id": 4950865,
+          "recordedAt": "2026-07-30T13:00:00.000Z",
+          "heatIndex": 29.147333333333336,
+          "temperature": 26.291493166666665,
+          "humidity": 96.14816616666667,
+          "pressure": 1005.2952333333334,
+          "wind": {
+            "direction": 288.71356833333346,
+            "speed": 0
+          },
+          "precipitation": 0.1099,
+          "uvIndex": null,
+          "distance": null,
+          "lightIntensity": 0
+        },
+        {
+          "id": 4950074,
+          "recordedAt": "2026-07-30T12:00:00.000Z",
+          "heatIndex": 29.16266666666667,
+          "temperature": 26.29706916666665,
+          "humidity": 96.10896183333334,
+          "pressure": 1004.5352500000004,
+          "wind": {
+            "direction": 288.7179183333332,
+            "speed": 0
+          },
+          "precipitation": 0,
+          "uvIndex": null,
+          "distance": null,
+          "lightIntensity": 0
+        },
+        {
+          "id": 4949257,
+          "recordedAt": "2026-07-30T11:00:00.000Z",
+          "heatIndex": 31.13083333333333,
+          "temperature": 26.9762395,
+          "humidity": 94.36504616666666,
+          "pressure": 1003.827,
+          "wind": {
+            "direction": 288.7208533333334,
+            "speed": 0.0007937627118644068
+          },
+          "precipitation": 0,
+          "uvIndex": null,
+          "distance": null,
+          "lightIntensity": 0
+        },
+        {
+          "id": 4948423,
+          "recordedAt": "2026-07-30T10:00:00.000Z",
+          "heatIndex": 32.501333333333335,
+          "temperature": 27.437373666666662,
+          "humidity": 93.57089099999999,
+          "pressure": 1003.3885666666666,
+          "wind": {
+            "direction": 288.71572166666664,
+            "speed": 0
+          },
+          "precipitation": 0,
+          "uvIndex": null,
+          "distance": null,
+          "lightIntensity": 281.7083184833334
+        },
+        {
+          "id": 4947586,
+          "recordedAt": "2026-07-30T09:00:00.000Z",
+          "heatIndex": 34.68566666666666,
+          "temperature": 28.231806000000006,
+          "humidity": 91.01145600000001,
+          "pressure": 1002.6570666666668,
+          "wind": {
+            "direction": 288.7353549999999,
+            "speed": 0.0015875084745762711
+          },
+          "precipitation": 0,
+          "uvIndex": 1.0625,
+          "distance": null,
+          "lightIntensity": 4709.069416666667
+        },
+        {
+          "id": 4946782,
+          "recordedAt": "2026-07-30T08:00:00.000Z",
+          "heatIndex": 35.662333333333336,
+          "temperature": 28.599585,
+          "humidity": 89.80326133333332,
+          "pressure": 1002.10455,
+          "wind": {
+            "direction": 288.7330966666667,
+            "speed": 0.09366343103448276
+          },
+          "precipitation": 0,
+          "uvIndex": 3.3666666666666667,
+          "distance": null,
+          "lightIntensity": 10502.833733333333
+        },
+        {
+          "id": 4945965,
+          "recordedAt": "2026-07-30T07:00:00.000Z",
+          "heatIndex": 38.9145,
+          "temperature": 29.579858500000004,
+          "humidity": 89.12101593220339,
+          "pressure": 1002.3238833333336,
+          "wind": {
+            "direction": 288.7274366666667,
+            "speed": 0.025757449999999998
+          },
+          "precipitation": 0,
+          "uvIndex": 5.766666666666667,
+          "distance": null,
+          "lightIntensity": 14583.208333333332
+        },
+        {
+          "id": 4945125,
+          "recordedAt": "2026-07-30T06:00:00.000Z",
+          "heatIndex": 39.96216666666667,
+          "temperature": 29.888412500000005,
+          "humidity": 88.92847383333334,
+          "pressure": 1002.4254833333331,
+          "wind": {
+            "direction": 288.74242999999996,
+            "speed": 0
+          },
+          "precipitation": 0,
+          "uvIndex": 9.75,
+          "distance": null,
+          "lightIntensity": 23178.11083333334
+        },
+        {
+          "id": 4944285,
+          "recordedAt": "2026-07-30T05:00:00.000Z",
+          "heatIndex": 41.0755,
+          "temperature": 30.13343933333332,
+          "humidity": 89.51613650000003,
+          "pressure": 1002.5814999999999,
+          "wind": {
+            "direction": 288.7593316666666,
+            "speed": 0
+          },
+          "precipitation": 0,
+          "uvIndex": 11,
+          "distance": null,
+          "lightIntensity": 39917.734166666654
+        },
+        {
+          "id": 4943448,
+          "recordedAt": "2026-07-30T04:00:00.000Z",
+          "heatIndex": 42.91049999999999,
+          "temperature": 30.69717633333333,
+          "humidity": 88.55200799999999,
+          "pressure": 1002.9660999999999,
+          "wind": {
+            "direction": 288.70185666666663,
+            "speed": 0
+          },
+          "precipitation": 0,
+          "uvIndex": 10.652173913043478,
+          "distance": null,
+          "lightIntensity": 45565.776610169494
+        },
+        {
+          "id": 4942608,
+          "recordedAt": "2026-07-30T03:00:00.000Z",
+          "heatIndex": 43.874500000000005,
+          "temperature": 31.075606333333333,
+          "humidity": 87.22397649999999,
+          "pressure": 1003.5039999999998,
+          "wind": {
+            "direction": 150.10273683333332,
+            "speed": 0
+          },
+          "precipitation": 0,
+          "uvIndex": 10.078947368421053,
+          "distance": null,
+          "lightIntensity": 42767.054
+        },
+        {
+          "id": 4941774,
+          "recordedAt": "2026-07-30T02:00:00.000Z",
+          "heatIndex": 43.49616666666667,
+          "temperature": 30.946816833333333,
+          "humidity": 87.59819133333333,
+          "pressure": 1003.8906833333335,
+          "wind": {
+            "direction": 64.06079116666666,
+            "speed": 0
+          },
+          "precipitation": 0,
+          "uvIndex": 11,
+          "distance": null,
+          "lightIntensity": 54593.53448275862
+        },
+        {
+          "id": 4940941,
+          "recordedAt": "2026-07-30T01:00:00.000Z",
+          "heatIndex": 32.2795,
+          "temperature": 27.29758316666666,
+          "humidity": 94.93861966666668,
+          "pressure": 1004.3673833333336,
+          "wind": {
+            "direction": 64.11235450000001,
+            "speed": 0
+          },
+          "precipitation": 0,
+          "uvIndex": 10.75,
+          "distance": null,
+          "lightIntensity": 36482.5825
+        },
+        {
+          "id": 4940115,
+          "recordedAt": "2026-07-30T00:00:00.000Z",
+          "heatIndex": 26.668833333333342,
+          "temperature": 25.42708516666666,
+          "humidity": 98.76038133333331,
+          "pressure": 1004.2284,
+          "wind": {
+            "direction": 64.13515466666665,
+            "speed": 0
+          },
+          "precipitation": 0,
+          "uvIndex": 10.136363636363637,
+          "distance": null,
+          "lightIntensity": 31699.067288135593
+        }
+      ]
+    },
+    "3nzr8bGo": {
+      "station_info": {
+        "id": "3nzr8bGo",
+        "name": "Alasas AWS - San Fernando City"
+      },
+      "telemetry": [
+        {
+          "id": 4951686,
+          "recordedAt": "2026-07-30T14:00:00.000Z",
+          "heatIndex": 31.415000000000006,
+          "temperature": 27.495650227272733,
+          "humidity": 84.26206249999998,
+          "pressure": 1010.6070227272728,
+          "wind": {
+            "direction": 192.2699318181818,
+            "speed": 0.5257924318181817
+          },
+          "precipitation": 0,
+          "uvIndex": null,
+          "distance": null,
+          "lightIntensity": 0
+        },
+        {
+          "id": 4950872,
+          "recordedAt": "2026-07-30T13:00:00.000Z",
+          "heatIndex": 31.833666666666677,
+          "temperature": 27.753635166666662,
+          "humidity": 82.43878966666666,
+          "pressure": 1010.6540500000004,
+          "wind": {
+            "direction": 192.2573716666667,
+            "speed": 0.2903566999999999
+          },
+          "precipitation": 0,
+          "uvIndex": null,
+          "distance": null,
+          "lightIntensity": 0
+        },
+        {
+          "id": 4950080,
+          "recordedAt": "2026-07-30T12:00:00.000Z",
+          "heatIndex": 32.75593220338984,
+          "temperature": 28.2573025,
+          "humidity": 80.14133593220339,
+          "pressure": 1010.21885,
+          "wind": {
+            "direction": 192.26045499999995,
+            "speed": 0
+          },
+          "precipitation": 0,
+          "uvIndex": null,
+          "distance": null,
+          "lightIntensity": 0
+        },
+        {
+          "id": 4949263,
+          "recordedAt": "2026-07-30T11:00:00.000Z",
+          "heatIndex": 33.67933333333333,
+          "temperature": 28.873797833333338,
+          "humidity": 76.50807383333331,
+          "pressure": 1009.6757666666665,
+          "wind": {
+            "direction": 191.84383333333335,
+            "speed": 0.2552328166666666
+          },
+          "precipitation": 0,
+          "uvIndex": null,
+          "distance": null,
+          "lightIntensity": 0
+        },
+        {
+          "id": 4948429,
+          "recordedAt": "2026-07-30T10:00:00.000Z",
+          "heatIndex": 34.989999999999995,
+          "temperature": 29.647690999999995,
+          "humidity": 73.51388650000003,
+          "pressure": 1009.0698833333332,
+          "wind": {
+            "direction": 141.65878666666669,
+            "speed": 1.1988920166666663
+          },
+          "precipitation": 0,
+          "uvIndex": null,
+          "distance": null,
+          "lightIntensity": 358.23611426666673
+        },
+        {
+          "id": 4947592,
+          "recordedAt": "2026-07-30T09:00:00.000Z",
+          "heatIndex": 37.43916666666667,
+          "temperature": 31.256947166666677,
+          "humidity": 67.26164566666667,
+          "pressure": 1008.1051666666668,
+          "wind": {
+            "direction": 140.88378833333323,
+            "speed": 0.992052
+          },
+          "precipitation": 0,
+          "uvIndex": null,
+          "distance": null,
+          "lightIntensity": 3818.7221999999997
+        },
+        {
+          "id": 4946789,
+          "recordedAt": "2026-07-30T08:00:00.000Z",
+          "heatIndex": 38.630500000000005,
+          "temperature": 32.98604099999999,
+          "humidity": 57.594211666666666,
+          "pressure": 1007.4884499999996,
+          "wind": {
+            "direction": 140.88535833333327,
+            "speed": 2.06996195
+          },
+          "precipitation": 0,
+          "uvIndex": 0.9545454545454546,
+          "distance": null,
+          "lightIntensity": 19601.861016666673
+        },
+        {
+          "id": 4945971,
+          "recordedAt": "2026-07-30T07:00:00.000Z",
+          "heatIndex": 38.92750000000001,
+          "temperature": 33.4983435,
+          "humidity": 54.86955366666668,
+          "pressure": 1007.4457166666665,
+          "wind": {
+            "direction": 140.86875333333336,
+            "speed": 2.8387827166666666
+          },
+          "precipitation": 0,
+          "uvIndex": 3.4166666666666665,
+          "distance": null,
+          "lightIntensity": 46781.16466666669
+        },
+        {
+          "id": 4945131,
+          "recordedAt": "2026-07-30T06:00:00.000Z",
+          "heatIndex": 38.66283333333332,
+          "temperature": 33.088134166666656,
+          "humidity": 56.91430133333335,
+          "pressure": 1007.77325,
+          "wind": {
+            "direction": 167.67169333333337,
+            "speed": 3.356273183333334
+          },
+          "precipitation": 0,
+          "uvIndex": 6.616666666666666,
+          "distance": null,
+          "lightIntensity": 54612.5
+        },
+        {
+          "id": 4944291,
+          "recordedAt": "2026-07-30T05:00:00.000Z",
+          "heatIndex": 38.28616666666668,
+          "temperature": 32.51488133333333,
+          "humidity": 59.932889166666655,
+          "pressure": 1008.1837833333335,
+          "wind": {
+            "direction": 179.33640066666663,
+            "speed": 3.1940820677966104
+          },
+          "precipitation": 0,
+          "uvIndex": 8.76271186440678,
+          "distance": null,
+          "lightIntensity": 54612.5
+        },
+        {
+          "id": 4943455,
+          "recordedAt": "2026-07-30T04:00:00.000Z",
+          "heatIndex": 37.732499999999995,
+          "temperature": 31.927126833333325,
+          "humidity": 62.685831833333324,
+          "pressure": 1008.8997499999999,
+          "wind": {
+            "direction": 150.1276171666667,
+            "speed": 3.404665966666667
+          },
+          "precipitation": 0,
+          "uvIndex": 9.733333333333333,
+          "distance": null,
+          "lightIntensity": 54612.5
+        },
+        {
+          "id": 4942615,
+          "recordedAt": "2026-07-30T03:00:00.000Z",
+          "heatIndex": 37.01525423728815,
+          "temperature": 31.416790499999998,
+          "humidity": 64.54847633333333,
+          "pressure": 1009.4524499999997,
+          "wind": {
+            "direction": 111.2454748333333,
+            "speed": 3.029231733333333
+          },
+          "precipitation": 0,
+          "uvIndex": 9.966101694915254,
+          "distance": null,
+          "lightIntensity": 52257.79116666666
+        },
+        {
+          "id": 4941781,
+          "recordedAt": "2026-07-30T02:00:00.000Z",
+          "heatIndex": 35.477666666666664,
+          "temperature": 30.036516333333346,
+          "humidity": 71.49895833333332,
+          "pressure": 1009.8491333333334,
+          "wind": {
+            "direction": 105.22108999999996,
+            "speed": 2.6733106666666657
+          },
+          "precipitation": 0,
+          "uvIndex": 6.383333333333334,
+          "distance": null,
+          "lightIntensity": 43541.166333333334
+        },
+        {
+          "id": 4940949,
+          "recordedAt": "2026-07-30T01:00:00.000Z",
+          "heatIndex": 34.43466666666667,
+          "temperature": 29.271968000000008,
+          "humidity": 75.27639983333331,
+          "pressure": 1010.1568333333333,
+          "wind": {
+            "direction": 104.85878666666667,
+            "speed": 1.884196166666666
+          },
+          "precipitation": 0,
+          "uvIndex": 3.8333333333333335,
+          "distance": null,
+          "lightIntensity": 35775.112711864414
+        },
+        {
+          "id": 4940122,
+          "recordedAt": "2026-07-30T00:00:00.000Z",
+          "heatIndex": 33.13699999999999,
+          "temperature": 28.352133,
+          "humidity": 81.03186516666666,
+          "pressure": 1009.931616666667,
+          "wind": {
+            "direction": 103.99492000000005,
+            "speed": 1.4884682166666663
+          },
+          "precipitation": 0,
+          "uvIndex": 3.6166666666666667,
+          "distance": null,
+          "lightIntensity": 47972.526000000005
+        }
+      ]
+    },
+    "O3z05pGV": {
+      "station_info": {
+        "id": "O3z05pGV",
+        "name": "Wawa Limay AWS - Bataan"
+      },
+      "telemetry": []
+    },
+    "nDbyYbR1": {
+      "station_info": {
+        "id": "nDbyYbR1",
+        "name": "Sabang Morong AWS - Bataan"
+      },
+      "telemetry": []
+    },
+    "Bkpj1zRO": {
+      "station_info": {
+        "id": "Bkpj1zRO",
+        "name": "Old Cabalan AWS - Olongapo City"
+      },
+      "telemetry": []
+    },
+    "rqAkmpKG": {
+      "station_info": {
+        "id": "rqAkmpKG",
+        "name": "Barretto AWS - Olongapo City"
+      },
+      "telemetry": [
+        {
+          "id": 4951673,
+          "recordedAt": "2026-07-30T14:00:00.000Z",
+          "heatIndex": 29.574222222222225,
+          "temperature": 26.449530888888887,
+          "humidity": 95.27610911111111,
+          "pressure": 1012.218422222222,
+          "wind": {
+            "direction": 245.45826666666673,
+            "speed": 0
+          },
+          "precipitation": 0,
+          "uvIndex": null,
+          "distance": null,
+          "lightIntensity": 0.6851849111111109
+        },
+        {
+          "id": 4950860,
+          "recordedAt": "2026-07-30T13:00:00.000Z",
+          "heatIndex": 30.537500000000012,
+          "temperature": 26.770023000000013,
+          "humidity": 94.91362216666666,
+          "pressure": 1012.4646333333333,
+          "wind": {
+            "direction": 245.44268333333326,
+            "speed": 0
+          },
+          "precipitation": 0,
+          "uvIndex": null,
+          "distance": null,
+          "lightIntensity": 0.7777774666666674
+        },
+        {
+          "id": 4950068,
+          "recordedAt": "2026-07-30T12:00:00.000Z",
+          "heatIndex": 32.30483333333333,
+          "temperature": 27.371515833333333,
+          "humidity": 93.65496733333333,
+          "pressure": 1012.0298333333333,
+          "wind": {
+            "direction": 245.40655333333328,
+            "speed": 0
+          },
+          "precipitation": 0,
+          "uvIndex": null,
+          "distance": null,
+          "lightIntensity": 0.7627115593220345
+        },
+        {
+          "id": 4949251,
+          "recordedAt": "2026-07-30T11:00:00.000Z",
+          "heatIndex": 33.99366666666666,
+          "temperature": 27.966235999999995,
+          "humidity": 92.02407266666667,
+          "pressure": 1011.5078166666667,
+          "wind": {
+            "direction": 241.83320166666664,
+            "speed": 0
+          },
+          "precipitation": 0,
+          "uvIndex": null,
+          "distance": null,
+          "lightIntensity": 0.5555553333333332
+        },
+        {
+          "id": 4948416,
+          "recordedAt": "2026-07-30T10:00:00.000Z",
+          "heatIndex": 36.32733333333333,
+          "temperature": 28.801815833333343,
+          "humidity": 89.72432016666666,
+          "pressure": 1011.0040999999998,
+          "wind": {
+            "direction": 253.6425216666667,
+            "speed": 0
+          },
+          "precipitation": 0,
+          "uvIndex": null,
+          "distance": null,
+          "lightIntensity": 452.87497163333336
+        },
+        {
+          "id": 4947580,
+          "recordedAt": "2026-07-30T09:00:00.000Z",
+          "heatIndex": 38.7165,
+          "temperature": 29.511690333333338,
+          "humidity": 89.33098133333334,
+          "pressure": 1010.0663166666668,
+          "wind": {
+            "direction": 189.87819108333343,
+            "speed": 0
+          },
+          "precipitation": 0,
+          "uvIndex": 0.9117647058823529,
+          "distance": null,
+          "lightIntensity": 4218.069499999999
+        },
+        {
+          "id": 4946776,
+          "recordedAt": "2026-07-30T08:00:00.000Z",
+          "heatIndex": 40.178333333333356,
+          "temperature": 30.007789999999996,
+          "humidity": 88.23000466666667,
+          "pressure": 1009.6909166666667,
+          "wind": {
+            "direction": 129.23838900000004,
+            "speed": 0
+          },
+          "precipitation": 0,
+          "uvIndex": 3.433333333333333,
+          "distance": null,
+          "lightIntensity": 14927.97178333334
+        },
+        {
+          "id": 4945959,
+          "recordedAt": "2026-07-30T07:00:00.000Z",
+          "heatIndex": 43.94716666666667,
+          "temperature": 31.282729166666662,
+          "humidity": 85.42518233333332,
+          "pressure": 1009.7272666666665,
+          "wind": {
+            "direction": 116.96286949999998,
+            "speed": 0
+          },
+          "precipitation": 0,
+          "uvIndex": 10.338983050847459,
+          "distance": null,
+          "lightIntensity": 45611.52305084748
+        },
+        {
+          "id": 4945119,
+          "recordedAt": "2026-07-30T06:00:00.000Z",
+          "heatIndex": 46.48766666666666,
+          "temperature": 32.017374833333335,
+          "humidity": 84.61368666666664,
+          "pressure": 1009.8429666666666,
+          "wind": {
+            "direction": 101.42810650000001,
+            "speed": 0
+          },
+          "precipitation": 0,
+          "uvIndex": 11,
+          "distance": null,
+          "lightIntensity": 54612.5
+        },
+        {
+          "id": 4944279,
+          "recordedAt": "2026-07-30T05:00:00.000Z",
+          "heatIndex": 48.25406779661018,
+          "temperature": 32.452211694915256,
+          "humidity": 84.65183033333332,
+          "pressure": 1010.0652999999998,
+          "wind": {
+            "direction": 106.86751716666666,
+            "speed": 0
+          },
+          "precipitation": 0,
+          "uvIndex": 11,
+          "distance": null,
+          "lightIntensity": 54612.5
+        },
+        {
+          "id": 4943443,
+          "recordedAt": "2026-07-30T04:00:00.000Z",
+          "heatIndex": 48.128833333333326,
+          "temperature": 32.35125033333333,
+          "humidity": 85.23281766666669,
+          "pressure": 1010.6200000000001,
+          "wind": {
+            "direction": 95.19585,
+            "speed": 0
+          },
+          "precipitation": 0,
+          "uvIndex": null,
+          "distance": null,
+          "lightIntensity": 54612.5
+        },
+        {
+          "id": 4942603,
+          "recordedAt": "2026-07-30T03:00:00.000Z",
+          "heatIndex": 45.48383333333333,
+          "temperature": 31.731527833333335,
+          "humidity": 84.86073616666664,
+          "pressure": 1011.11,
+          "wind": {
+            "direction": 93.58387716666668,
+            "speed": 0
+          },
+          "precipitation": 0,
+          "uvIndex": 10.96875,
+          "distance": null,
+          "lightIntensity": 36621.30599999999
+        },
+        {
+          "id": 4941768,
+          "recordedAt": "2026-07-30T02:00:00.000Z",
+          "heatIndex": 43.78366666666666,
+          "temperature": 31.874733,
+          "humidity": 79.69753383333331,
+          "pressure": 1011.3638166666666,
+          "wind": {
+            "direction": 97.33679863333334,
+            "speed": 0
+          },
+          "precipitation": 0,
+          "uvIndex": 10.813559322033898,
+          "distance": null,
+          "lightIntensity": 18110.500166666672
+        },
+        {
+          "id": 4940936,
+          "recordedAt": "2026-07-30T01:00:00.000Z",
+          "heatIndex": 40.55833333333333,
+          "temperature": 30.35436300000001,
+          "humidity": 85.565506,
+          "pressure": 1011.6791499999998,
+          "wind": {
+            "direction": 181.78934,
+            "speed": 0
+          },
+          "precipitation": 0,
+          "uvIndex": 11,
+          "distance": null,
+          "lightIntensity": 15308.513999999997
+        },
+        {
+          "id": 4940109,
+          "recordedAt": "2026-07-30T00:00:00.000Z",
+          "heatIndex": 36.42766666666666,
+          "temperature": 28.845175166666674,
+          "humidity": 89.53270433333333,
+          "pressure": 1011.3970333333333,
+          "wind": {
+            "direction": 232.25397999999996,
+            "speed": 0
+          },
+          "precipitation": 0,
+          "uvIndex": 10.4,
+          "distance": null,
+          "lightIntensity": 11603.40228333333
+        }
+      ]
+    },
+    "wkAWLzlm": {
+      "station_info": {
+        "id": "wkAWLzlm",
+        "name": "Lazatin AWS - San Fernando City"
+      },
+      "telemetry": [
+        {
+          "id": 4951667,
+          "recordedAt": "2026-07-30T14:00:00.000Z",
+          "heatIndex": 35.55266666666665,
+          "temperature": 29.201937777777765,
+          "humidity": 81.05155888888889,
+          "pressure": 1008.8990888888886,
+          "wind": {
+            "direction": 177.6718133333333,
+            "speed": 1.1229205999999998
+          },
+          "precipitation": 0,
+          "uvIndex": null,
+          "distance": null,
+          "lightIntensity": 0
+        },
+        {
+          "id": 4950854,
+          "recordedAt": "2026-07-30T13:00:00.000Z",
+          "heatIndex": 36.361166666666655,
+          "temperature": 29.62343183333334,
+          "humidity": 79.35334333333334,
+          "pressure": 1008.9690333333332,
+          "wind": {
+            "direction": 89.55605349999999,
+            "speed": 0.3286436666666666
+          },
+          "precipitation": 0,
+          "uvIndex": null,
+          "distance": null,
+          "lightIntensity": 0
+        },
+        {
+          "id": 4950063,
+          "recordedAt": "2026-07-30T12:00:00.000Z",
+          "heatIndex": 36.66033333333335,
+          "temperature": 29.927986500000006,
+          "humidity": 77.12252516666669,
+          "pressure": 1008.5557166666666,
+          "wind": {
+            "direction": 79.8947245,
+            "speed": 0.8151894237288135
+          },
+          "precipitation": 0,
+          "uvIndex": null,
+          "distance": null,
+          "lightIntensity": 0
+        },
+        {
+          "id": 4949246,
+          "recordedAt": "2026-07-30T11:00:00.000Z",
+          "heatIndex": 36.809999999999995,
+          "temperature": 30.285330833333337,
+          "humidity": 74.02980866666668,
+          "pressure": 1007.9865333333332,
+          "wind": {
+            "direction": 45.745262700000005,
+            "speed": 1.8915252372881364
+          },
+          "precipitation": 0,
+          "uvIndex": null,
+          "distance": null,
+          "lightIntensity": 0
+        },
+        {
+          "id": 4948411,
+          "recordedAt": "2026-07-30T10:00:00.000Z",
+          "heatIndex": 38.89200000000001,
+          "temperature": 31.32133499999999,
+          "humidity": 71.26431866666665,
+          "pressure": 1007.4366333333334,
+          "wind": {
+            "direction": 37.79154696666667,
+            "speed": 2.5843304000000002
+          },
+          "precipitation": 0,
+          "uvIndex": null,
+          "distance": null,
+          "lightIntensity": 359.4860912666667
+        },
+        {
+          "id": 4947575,
+          "recordedAt": "2026-07-30T09:00:00.000Z",
+          "heatIndex": 40.1965,
+          "temperature": 32.498158666666676,
+          "humidity": 65.55384166666667,
+          "pressure": 1006.4937833333335,
+          "wind": {
+            "direction": 182.75297155000004,
+            "speed": 1.7905328000000005
+          },
+          "precipitation": 0,
+          "uvIndex": 0.7906976744186046,
+          "distance": null,
+          "lightIntensity": 3564.2638999999986
+        },
+        {
+          "id": 4946770,
+          "recordedAt": "2026-07-30T08:00:00.000Z",
+          "heatIndex": 40.41716666666668,
+          "temperature": 34.009483166666676,
+          "humidity": 55.59344750000001,
+          "pressure": 1006.12975,
+          "wind": {
+            "direction": 96.59198035000004,
+            "speed": 3.098698766666667
+          },
+          "precipitation": 0,
+          "uvIndex": 4.766666666666667,
+          "distance": null,
+          "lightIntensity": 17048.832749999994
+        },
+        {
+          "id": 4945953,
+          "recordedAt": "2026-07-30T07:00:00.000Z",
+          "heatIndex": 40.477500000000006,
+          "temperature": 34.23145433333333,
+          "humidity": 54.25393983333334,
+          "pressure": 1006.2878,
+          "wind": {
+            "direction": 219.44686428333327,
+            "speed": 3.2469991833333336
+          },
+          "precipitation": 0,
+          "uvIndex": 10.416666666666666,
+          "distance": null,
+          "lightIntensity": 41698.997166666675
+        },
+        {
+          "id": 4945113,
+          "recordedAt": "2026-07-30T06:00:00.000Z",
+          "heatIndex": 40.75383333333333,
+          "temperature": 33.661440666666664,
+          "humidity": 58.731553500000004,
+          "pressure": 1006.5209333333332,
+          "wind": {
+            "direction": 241.13233028333332,
+            "speed": 3.7426349
+          },
+          "precipitation": 0,
+          "uvIndex": 11,
+          "distance": null,
+          "lightIntensity": 54579.562033898306
+        },
+        {
+          "id": 4944273,
+          "recordedAt": "2026-07-30T05:00:00.000Z",
+          "heatIndex": 41.018333333333324,
+          "temperature": 33.241296,
+          "humidity": 62.29616250000001,
+          "pressure": 1006.8415166666666,
+          "wind": {
+            "direction": 248.74872631666662,
+            "speed": 3.503012583333334
+          },
+          "precipitation": 0,
+          "uvIndex": 11,
+          "distance": null,
+          "lightIntensity": 53809.02783333333
+        },
+        {
+          "id": 4943436,
+          "recordedAt": "2026-07-30T04:00:00.000Z",
+          "heatIndex": 40.36350000000001,
+          "temperature": 32.54050716666667,
+          "humidity": 65.6767715,
+          "pressure": 1007.6142166666666,
+          "wind": {
+            "direction": 273.6284474,
+            "speed": 3.663020983333333
+          },
+          "precipitation": 0,
+          "uvIndex": 11,
+          "distance": null,
+          "lightIntensity": 54612.5
+        },
+        {
+          "id": 4942596,
+          "recordedAt": "2026-07-30T03:00:00.000Z",
+          "heatIndex": 40.21549999999999,
+          "temperature": 32.55277683333334,
+          "humidity": 65.19915933333333,
+          "pressure": 1008.15475,
+          "wind": {
+            "direction": 298.3397261833334,
+            "speed": 3.7036084499999995
+          },
+          "precipitation": 0,
+          "uvIndex": 11,
+          "distance": null,
+          "lightIntensity": 54612.5
+        },
+        {
+          "id": 4941762,
+          "recordedAt": "2026-07-30T02:00:00.000Z",
+          "heatIndex": 39.765,
+          "temperature": 31.89480583333333,
+          "humidity": 69.06326316666667,
+          "pressure": 1008.5758833333334,
+          "wind": {
+            "direction": 303.4455624166667,
+            "speed": 3.027670583333333
+          },
+          "precipitation": 0,
+          "uvIndex": 11,
+          "distance": null,
+          "lightIntensity": 54612.5
+        },
+        {
+          "id": 4940930,
+          "recordedAt": "2026-07-30T01:00:00.000Z",
+          "heatIndex": 38.45316666666667,
+          "temperature": 30.675897666666675,
+          "humidity": 75.8238383333333,
+          "pressure": 1008.8122166666666,
+          "wind": {
+            "direction": 298.1871085666667,
+            "speed": 2.3501717333333336
+          },
+          "precipitation": 0,
+          "uvIndex": 10.145454545454545,
+          "distance": null,
+          "lightIntensity": 36359.749833333335
+        },
+        {
+          "id": 4940103,
+          "recordedAt": "2026-07-30T00:00:00.000Z",
+          "heatIndex": 37.523833333333336,
+          "temperature": 29.864441166666666,
+          "humidity": 81.30423549999998,
+          "pressure": 1008.5728333333336,
+          "wind": {
+            "direction": 234.21623333333338,
+            "speed": 1.6266216833333333
+          },
+          "precipitation": 0,
+          "uvIndex": 10,
+          "distance": null,
+          "lightIntensity": 40096.957
+        }
+      ]
+    },
+    "VEpdDpBK": {
+      "station_info": {
+        "id": "VEpdDpBK",
+        "name": "San Luis AWS - Aurora [Under Maintenance]"
+      },
+      "telemetry": [
+        {
+          "id": 4948052,
+          "recordedAt": "2026-07-30T09:00:00.000Z",
+          "heatIndex": null,
+          "temperature": null,
+          "humidity": null,
+          "pressure": null,
+          "wind": {
+            "direction": 113.13030000000002,
+            "speed": null
+          },
+          "precipitation": null,
+          "uvIndex": 10.666666666666666,
+          "distance": null,
+          "lightIntensity": null
+        },
+        {
+          "id": 4945958,
+          "recordedAt": "2026-07-30T07:00:00.000Z",
+          "heatIndex": null,
+          "temperature": null,
+          "humidity": null,
+          "pressure": null,
+          "wind": {
+            "direction": 113.13029999999998,
+            "speed": null
+          },
+          "precipitation": null,
+          "uvIndex": 1.36,
+          "distance": null,
+          "lightIntensity": null
+        },
+        {
+          "id": 4945118,
+          "recordedAt": "2026-07-30T06:00:00.000Z",
+          "heatIndex": null,
+          "temperature": null,
+          "humidity": null,
+          "pressure": null,
+          "wind": {
+            "direction": 113.13029999999988,
+            "speed": null
+          },
+          "precipitation": null,
+          "uvIndex": 3.1333333333333333,
+          "distance": null,
+          "lightIntensity": null
+        },
+        {
+          "id": 4944278,
+          "recordedAt": "2026-07-30T05:00:00.000Z",
+          "heatIndex": null,
+          "temperature": null,
+          "humidity": null,
+          "pressure": null,
+          "wind": {
+            "direction": 113.13029999999988,
+            "speed": null
+          },
+          "precipitation": null,
+          "uvIndex": 8.733333333333333,
+          "distance": null,
+          "lightIntensity": null
+        },
+        {
+          "id": 4943442,
+          "recordedAt": "2026-07-30T04:00:00.000Z",
+          "heatIndex": null,
+          "temperature": null,
+          "humidity": null,
+          "pressure": null,
+          "wind": {
+            "direction": 88.29957849999998,
+            "speed": null
+          },
+          "precipitation": null,
+          "uvIndex": 11,
+          "distance": null,
+          "lightIntensity": null
+        },
+        {
+          "id": 4942602,
+          "recordedAt": "2026-07-30T03:00:00.000Z",
+          "heatIndex": null,
+          "temperature": null,
+          "humidity": null,
+          "pressure": null,
+          "wind": {
+            "direction": 100.14866545000001,
+            "speed": null
+          },
+          "precipitation": null,
+          "uvIndex": 11,
+          "distance": null,
+          "lightIntensity": null
+        },
+        {
+          "id": 4941773,
+          "recordedAt": "2026-07-30T02:00:00.000Z",
+          "heatIndex": null,
+          "temperature": null,
+          "humidity": null,
+          "pressure": null,
+          "wind": {
+            "direction": 147.73235714285715,
+            "speed": 3069.116999999999
+          },
+          "precipitation": 345710.20799999975,
+          "uvIndex": 10.966101694915254,
+          "distance": null,
+          "lightIntensity": null
+        },
+        {
+          "id": 4940944,
+          "recordedAt": "2026-07-30T01:00:00.000Z",
+          "heatIndex": null,
+          "temperature": null,
+          "humidity": null,
+          "pressure": null,
+          "wind": {
+            "direction": null,
+            "speed": 3069.116999999999
+          },
+          "precipitation": 381721.6879999996,
+          "uvIndex": 11,
+          "distance": null,
+          "lightIntensity": null
+        },
+        {
+          "id": 4940548,
+          "recordedAt": "2026-07-30T00:00:00.000Z",
+          "heatIndex": null,
+          "temperature": null,
+          "humidity": null,
+          "pressure": null,
+          "wind": {
+            "direction": null,
+            "speed": 3069.116999999999
+          },
+          "precipitation": 187259.69600000003,
+          "uvIndex": 11,
+          "distance": null,
+          "lightIntensity": null
+        }
+      ]
+    },
+    "1Zb102pg": {
+      "station_info": {
+        "id": "1Zb102pg",
+        "name": "San Jose City AWS"
+      },
+      "telemetry": []
+    },
+    "xMbRYxp0": {
+      "station_info": {
+        "id": "xMbRYxp0",
+        "name": "Avida Asten AWS - Makati City"
+      },
+      "telemetry": []
+    },
+    "lMAZe9b3": {
+      "station_info": {
+        "id": "lMAZe9b3",
+        "name": "Abucay AWS - Bataan"
+      },
+      "telemetry": [
+        {
+          "id": 4951664,
+          "recordedAt": "2026-07-30T14:00:00.000Z",
+          "heatIndex": 24.378461538461544,
+          "temperature": 24.46982487179487,
+          "humidity": 92.32414871794875,
+          "pressure": 1000.7775128205127,
+          "wind": {
+            "direction": 247.5920641025641,
+            "speed": 0.0049296578947368415
+          },
+          "precipitation": 0,
+          "uvIndex": 0,
+          "distance": null,
+          "lightIntensity": 0
+        },
+        {
+          "id": 4950878,
+          "recordedAt": "2026-07-30T13:00:00.000Z",
+          "heatIndex": 25.094999999999995,
+          "temperature": 24.774157333333342,
+          "humidity": 91.62056800000002,
+          "pressure": 1000.5721900000002,
+          "wind": {
+            "direction": 246.44481999999996,
+            "speed": 0
+          },
+          "precipitation": 0,
+          "uvIndex": 0,
+          "distance": null,
+          "lightIntensity": 0
+        },
+        {
+          "id": 4950071,
+          "recordedAt": "2026-07-30T12:00:00.000Z",
+          "heatIndex": 26.077333333333335,
+          "temperature": 25.190048,
+          "humidity": 90.41902400000002,
+          "pressure": 999.18642,
+          "wind": {
+            "direction": 260.69405333333333,
+            "speed": 0.023415857142857145
+          },
+          "precipitation": 0,
+          "uvIndex": 0,
+          "distance": null,
+          "lightIntensity": 0
+        },
+        {
+          "id": 4949334,
+          "recordedAt": "2026-07-30T11:00:00.000Z",
+          "heatIndex": 26.80027027027027,
+          "temperature": 25.500000000000004,
+          "humidity": 88.88584972972974,
+          "pressure": 998.0306432432435,
+          "wind": {
+            "direction": 269.8280594594594,
+            "speed": 0
+          },
+          "precipitation": 0,
+          "uvIndex": 0,
+          "distance": null,
+          "lightIntensity": 0
+        },
+        {
+          "id": 4948419,
+          "recordedAt": "2026-07-30T10:00:00.000Z",
+          "heatIndex": 29.823272727272734,
+          "temperature": 26.844810363636352,
+          "humidity": 85.04079945454545,
+          "pressure": 998.220478181818,
+          "wind": {
+            "direction": 269.8905181818181,
+            "speed": 0
+          },
+          "precipitation": 0,
+          "uvIndex": 0,
+          "distance": null,
+          "lightIntensity": 428.49999536363646
+        },
+        {
+          "id": 4947582,
+          "recordedAt": "2026-07-30T09:00:00.000Z",
+          "heatIndex": 33.613499999999995,
+          "temperature": 28.690296333333333,
+          "humidity": 78.6457723333333,
+          "pressure": 999.7050733333332,
+          "wind": {
+            "direction": 270.667435,
+            "speed": 0
+          },
+          "precipitation": 0,
+          "uvIndex": 0,
+          "distance": null,
+          "lightIntensity": 3225.055566666668
+        },
+        {
+          "id": 4946778,
+          "recordedAt": "2026-07-30T08:00:00.000Z",
+          "heatIndex": 37.80568965517242,
+          "temperature": 31.003285172413793,
+          "humidity": 70.7955420689655,
+          "pressure": 1002.602879310345,
+          "wind": {
+            "direction": 265.6086482758621,
+            "speed": 0.009037701754385964
+          },
+          "precipitation": 0,
+          "uvIndex": 1.6724137931034482,
+          "distance": null,
+          "lightIntensity": 7675.818879310348
+        },
+        {
+          "id": 4945961,
+          "recordedAt": "2026-07-30T07:00:00.000Z",
+          "heatIndex": 40.4596551724138,
+          "temperature": 32.45655741379311,
+          "humidity": 66.53835051724137,
+          "pressure": 1006.1882758620691,
+          "wind": {
+            "direction": 145.04298101724137,
+            "speed": 0.3629458392857143
+          },
+          "precipitation": 0,
+          "uvIndex": 6.551724137931035,
+          "distance": null,
+          "lightIntensity": 14715.977068965516
+        },
+        {
+          "id": 4945121,
+          "recordedAt": "2026-07-30T06:00:00.000Z",
+          "heatIndex": 40.18749999999998,
+          "temperature": 32.3544795,
+          "humidity": 66.58714083333334,
+          "pressure": 1007.1575999999998,
+          "wind": {
+            "direction": 120.54297013333333,
+            "speed": 0.5331010833333333
+          },
+          "precipitation": 0,
+          "uvIndex": 10.45,
+          "distance": null,
+          "lightIntensity": 24279.15266666667
+        },
+        {
+          "id": 4944281,
+          "recordedAt": "2026-07-30T05:00:00.000Z",
+          "heatIndex": 40.02266666666666,
+          "temperature": 32.23394549999999,
+          "humidity": 67.03956383333333,
+          "pressure": 1008.4213,
+          "wind": {
+            "direction": 141.1695664833334,
+            "speed": 0.9124380166666667
+          },
+          "precipitation": 0,
+          "uvIndex": 11,
+          "distance": null,
+          "lightIntensity": 29981.22216666667
+        },
+        {
+          "id": 4943445,
+          "recordedAt": "2026-07-30T04:00:00.000Z",
+          "heatIndex": 40.07122807017545,
+          "temperature": 31.932880175438598,
+          "humidity": 69.62320842105261,
+          "pressure": 1010.1074912280701,
+          "wind": {
+            "direction": 90.02955275438593,
+            "speed": 1.0138656666666668
+          },
+          "precipitation": 0,
+          "uvIndex": 11,
+          "distance": null,
+          "lightIntensity": 41844.837543859656
+        },
+        {
+          "id": 4942605,
+          "recordedAt": "2026-07-30T03:00:00.000Z",
+          "heatIndex": 36.918166666666664,
+          "temperature": 30.25867116666666,
+          "humidity": 74.58854433333335,
+          "pressure": 1008.7438333333333,
+          "wind": {
+            "direction": 159.72857105000003,
+            "speed": 0.9858076666666662
+          },
+          "precipitation": 0,
+          "uvIndex": 10.883333333333333,
+          "distance": null,
+          "lightIntensity": 46563.818
+        },
+        {
+          "id": 4941770,
+          "recordedAt": "2026-07-30T02:00:00.000Z",
+          "heatIndex": 39.00963636363637,
+          "temperature": 30.762974545454536,
+          "humidity": 76.69038727272728,
+          "pressure": 1012.2146000000002,
+          "wind": {
+            "direction": 131.62219374545452,
+            "speed": 0.7545110185185188
+          },
+          "precipitation": 0,
+          "uvIndex": 11,
+          "distance": null,
+          "lightIntensity": 49812.71574074075
+        },
+        {
+          "id": 4940938,
+          "recordedAt": "2026-07-30T01:00:00.000Z",
+          "heatIndex": 38.26084745762711,
+          "temperature": 29.977853389830504,
+          "humidity": 82.24079186440675,
+          "pressure": 1014.1128813559322,
+          "wind": {
+            "direction": 109.67730069491527,
+            "speed": 0.7651826610169493
+          },
+          "precipitation": 0,
+          "uvIndex": 11,
+          "distance": null,
+          "lightIntensity": 50665.0559322034
+        },
+        {
+          "id": 4940104,
+          "recordedAt": "2026-07-30T00:00:00.000Z",
+          "heatIndex": 34.37057692307693,
+          "temperature": 28.32742442307692,
+          "humidity": 87.76792173076923,
+          "pressure": 1012.8669423076925,
+          "wind": {
+            "direction": 234.9815042307692,
+            "speed": 0.26354323529411766
+          },
+          "precipitation": 0,
+          "uvIndex": 9.288461538461538,
+          "distance": null,
+          "lightIntensity": 33450.9925
+        }
+      ]
+    },
+    "WYAejdzg": {
+      "station_info": {
+        "id": "WYAejdzg",
+        "name": "Poblacion Mariveles AWS - Bataan"
+      },
+      "telemetry": [
+        {
+          "id": 4951698,
+          "recordedAt": "2026-07-30T14:00:00.000Z",
+          "heatIndex": null,
+          "temperature": null,
+          "humidity": null,
+          "pressure": null,
+          "wind": {
+            "direction": null,
+            "speed": null
+          },
+          "precipitation": null,
+          "uvIndex": 0,
+          "distance": null,
+          "lightIntensity": null
+        },
+        {
+          "id": 4950887,
+          "recordedAt": "2026-07-30T13:00:00.000Z",
+          "heatIndex": null,
+          "temperature": null,
+          "humidity": null,
+          "pressure": null,
+          "wind": {
+            "direction": null,
+            "speed": null
+          },
+          "precipitation": null,
+          "uvIndex": 0,
+          "distance": null,
+          "lightIntensity": null
+        },
+        {
+          "id": 4950091,
+          "recordedAt": "2026-07-30T12:00:00.000Z",
+          "heatIndex": null,
+          "temperature": null,
+          "humidity": null,
+          "pressure": null,
+          "wind": {
+            "direction": null,
+            "speed": null
+          },
+          "precipitation": null,
+          "uvIndex": 0,
+          "distance": null,
+          "lightIntensity": null
+        },
+        {
+          "id": 4949275,
+          "recordedAt": "2026-07-30T11:00:00.000Z",
+          "heatIndex": null,
+          "temperature": null,
+          "humidity": null,
+          "pressure": null,
+          "wind": {
+            "direction": null,
+            "speed": null
+          },
+          "precipitation": null,
+          "uvIndex": 0,
+          "distance": null,
+          "lightIntensity": null
+        },
+        {
+          "id": 4948442,
+          "recordedAt": "2026-07-30T10:00:00.000Z",
+          "heatIndex": null,
+          "temperature": null,
+          "humidity": null,
+          "pressure": null,
+          "wind": {
+            "direction": null,
+            "speed": null
+          },
+          "precipitation": null,
+          "uvIndex": 0,
+          "distance": null,
+          "lightIntensity": null
+        },
+        {
+          "id": 4947604,
+          "recordedAt": "2026-07-30T09:00:00.000Z",
+          "heatIndex": null,
+          "temperature": null,
+          "humidity": null,
+          "pressure": null,
+          "wind": {
+            "direction": null,
+            "speed": null
+          },
+          "precipitation": null,
+          "uvIndex": 0.2833333333333333,
+          "distance": null,
+          "lightIntensity": null
+        },
+        {
+          "id": 4946802,
+          "recordedAt": "2026-07-30T08:00:00.000Z",
+          "heatIndex": null,
+          "temperature": null,
+          "humidity": null,
+          "pressure": null,
+          "wind": {
+            "direction": null,
+            "speed": null
+          },
+          "precipitation": null,
+          "uvIndex": 5.95,
+          "distance": null,
+          "lightIntensity": null
+        },
+        {
+          "id": 4945984,
+          "recordedAt": "2026-07-30T07:00:00.000Z",
+          "heatIndex": null,
+          "temperature": null,
+          "humidity": null,
+          "pressure": null,
+          "wind": {
+            "direction": null,
+            "speed": null
+          },
+          "precipitation": null,
+          "uvIndex": 11,
+          "distance": null,
+          "lightIntensity": null
+        },
+        {
+          "id": 4945144,
+          "recordedAt": "2026-07-30T06:00:00.000Z",
+          "heatIndex": null,
+          "temperature": null,
+          "humidity": null,
+          "pressure": null,
+          "wind": {
+            "direction": null,
+            "speed": null
+          },
+          "precipitation": null,
+          "uvIndex": 11,
+          "distance": null,
+          "lightIntensity": null
+        },
+        {
+          "id": 4944304,
+          "recordedAt": "2026-07-30T05:00:00.000Z",
+          "heatIndex": null,
+          "temperature": null,
+          "humidity": null,
+          "pressure": null,
+          "wind": {
+            "direction": null,
+            "speed": null
+          },
+          "precipitation": null,
+          "uvIndex": 11,
+          "distance": null,
+          "lightIntensity": null
+        },
+        {
+          "id": 4943468,
+          "recordedAt": "2026-07-30T04:00:00.000Z",
+          "heatIndex": null,
+          "temperature": null,
+          "humidity": null,
+          "pressure": null,
+          "wind": {
+            "direction": null,
+            "speed": null
+          },
+          "precipitation": null,
+          "uvIndex": 11,
+          "distance": null,
+          "lightIntensity": null
+        },
+        {
+          "id": 4942628,
+          "recordedAt": "2026-07-30T03:00:00.000Z",
+          "heatIndex": null,
+          "temperature": null,
+          "humidity": null,
+          "pressure": null,
+          "wind": {
+            "direction": null,
+            "speed": null
+          },
+          "precipitation": null,
+          "uvIndex": 11,
+          "distance": null,
+          "lightIntensity": null
+        },
+        {
+          "id": 4941794,
+          "recordedAt": "2026-07-30T02:00:00.000Z",
+          "heatIndex": null,
+          "temperature": null,
+          "humidity": null,
+          "pressure": null,
+          "wind": {
+            "direction": null,
+            "speed": null
+          },
+          "precipitation": null,
+          "uvIndex": 11,
+          "distance": null,
+          "lightIntensity": null
+        },
+        {
+          "id": 4940962,
+          "recordedAt": "2026-07-30T01:00:00.000Z",
+          "heatIndex": null,
+          "temperature": null,
+          "humidity": null,
+          "pressure": null,
+          "wind": {
+            "direction": null,
+            "speed": null
+          },
+          "precipitation": null,
+          "uvIndex": 11,
+          "distance": null,
+          "lightIntensity": null
+        },
+        {
+          "id": 4940135,
+          "recordedAt": "2026-07-30T00:00:00.000Z",
+          "heatIndex": null,
+          "temperature": null,
+          "humidity": null,
+          "pressure": null,
+          "wind": {
+            "direction": null,
+            "speed": null
+          },
+          "precipitation": null,
+          "uvIndex": 10.75,
+          "distance": null,
+          "lightIntensity": null
+        }
+      ]
+    },
+    "QgbGldAY": {
+      "station_info": {
+        "id": "QgbGldAY",
+        "name": "Pag-asa Bagac AWS - Bataan"
+      },
+      "telemetry": []
+    },
+    "03pqkGAj": {
+      "station_info": {
+        "id": "03pqkGAj",
+        "name": "Bongabon Water District AWS - Nueva Ecija"
+      },
+      "telemetry": []
+    },
+    "3nzr48bG": {
+      "station_info": {
+        "id": "3nzr48bG",
+        "name": "Calumpit AWS - Bulacan"
+      },
+      "telemetry": []
+    },
+    "nDby4YpR": {
+      "station_info": {
+        "id": "nDby4YpR",
+        "name": "General Natividad AWS - Nueva Ecija"
+      },
+      "telemetry": [
+        {
+          "id": 4951689,
+          "recordedAt": "2026-07-30T14:00:00.000Z",
+          "heatIndex": 29.002954545454546,
+          "temperature": 26.2336075,
+          "humidity": 96.71116204545451,
+          "pressure": 1005.6681363636363,
+          "wind": {
+            "direction": 214.8489590909091,
+            "speed": 0.4768321136363637
+          },
+          "precipitation": 0,
+          "uvIndex": 0,
+          "distance": null,
+          "lightIntensity": 0
+        },
+        {
+          "id": 4950875,
+          "recordedAt": "2026-07-30T13:00:00.000Z",
+          "heatIndex": 30.413166666666676,
+          "temperature": 26.690052833333333,
+          "humidity": 96.33871333333332,
+          "pressure": 1005.7209166666668,
+          "wind": {
+            "direction": 233.3276399999999,
+            "speed": 0.9381954333333333
+          },
+          "precipitation": 0,
+          "uvIndex": 0,
+          "distance": null,
+          "lightIntensity": 0
+        },
+        {
+          "id": 4950083,
+          "recordedAt": "2026-07-30T12:00:00.000Z",
+          "heatIndex": 31.03433333333333,
+          "temperature": 26.89422949999999,
+          "humidity": 95.95414749999996,
+          "pressure": 1004.8507999999999,
+          "wind": {
+            "direction": 291.6244699999999,
+            "speed": 0.13888029310344827
+          },
+          "precipitation": 0,
+          "uvIndex": 0,
+          "distance": null,
+          "lightIntensity": 0
+        },
+        {
+          "id": 4949266,
+          "recordedAt": "2026-07-30T11:00:00.000Z",
+          "heatIndex": 31.65966666666667,
+          "temperature": 27.145352499999994,
+          "humidity": 94.3248555,
+          "pressure": 1004.185383333333,
+          "wind": {
+            "direction": 279.96602833333327,
+            "speed": 0.5557363666666667
+          },
+          "precipitation": 0,
+          "uvIndex": 0,
+          "distance": null,
+          "lightIntensity": 0
+        },
+        {
+          "id": 4948432,
+          "recordedAt": "2026-07-30T10:00:00.000Z",
+          "heatIndex": 32.868166666666674,
+          "temperature": 27.722707833333327,
+          "humidity": 90.01066616666665,
+          "pressure": 1003.6919666666669,
+          "wind": {
+            "direction": 290.0052233333332,
+            "speed": 0.649293966101695
+          },
+          "precipitation": 0,
+          "uvIndex": 0,
+          "distance": null,
+          "lightIntensity": 274.23610248333335
+        },
+        {
+          "id": 4947594,
+          "recordedAt": "2026-07-30T09:00:00.000Z",
+          "heatIndex": 34.3325,
+          "temperature": 28.511153500000002,
+          "humidity": 84.72084633333336,
+          "pressure": 1002.9972999999999,
+          "wind": {
+            "direction": 296.39636833333327,
+            "speed": 1.8896598499999997
+          },
+          "precipitation": 0,
+          "uvIndex": 0,
+          "distance": null,
+          "lightIntensity": 4646.652783333333
+        },
+        {
+          "id": 4946791,
+          "recordedAt": "2026-07-30T08:00:00.000Z",
+          "heatIndex": 36.005333333333326,
+          "temperature": 29.1271645,
+          "humidity": 83.89331516666665,
+          "pressure": 1002.476666666667,
+          "wind": {
+            "direction": 290.25054666666676,
+            "speed": 1.6734534499999998
+          },
+          "precipitation": 0,
+          "uvIndex": 1.0833333333333333,
+          "distance": null,
+          "lightIntensity": 10277.916383333331
+        },
+        {
+          "id": 4945974,
+          "recordedAt": "2026-07-30T07:00:00.000Z",
+          "heatIndex": 34.88883333333333,
+          "temperature": 28.696212,
+          "humidity": 84.77866833333333,
+          "pressure": 1002.7484833333332,
+          "wind": {
+            "direction": 219.03807999999992,
+            "speed": 1.2667979166666663
+          },
+          "precipitation": 0,
+          "uvIndex": 2.9833333333333334,
+          "distance": null,
+          "lightIntensity": 13289.680833333334
+        },
+        {
+          "id": 4945134,
+          "recordedAt": "2026-07-30T06:00:00.000Z",
+          "heatIndex": 36.75599999999999,
+          "temperature": 29.40241616666666,
+          "humidity": 83.42760766666669,
+          "pressure": 1002.9348666666668,
+          "wind": {
+            "direction": 234.04045116666663,
+            "speed": 1.8045821999999998
+          },
+          "precipitation": 0,
+          "uvIndex": 6.366666666666666,
+          "distance": null,
+          "lightIntensity": 18951.48633333333
+        },
+        {
+          "id": 4944294,
+          "recordedAt": "2026-07-30T05:00:00.000Z",
+          "heatIndex": 33.623,
+          "temperature": 27.814790333333335,
+          "humidity": 93.06164733333331,
+          "pressure": 1003.0523833333332,
+          "wind": {
+            "direction": 198.18182016666668,
+            "speed": 1.6523791166666664
+          },
+          "precipitation": 3.7366,
+          "uvIndex": 8.483333333333333,
+          "distance": null,
+          "lightIntensity": 21145.180766666665
+        },
+        {
+          "id": 4943458,
+          "recordedAt": "2026-07-30T04:00:00.000Z",
+          "heatIndex": 35.46716666666666,
+          "temperature": 28.785199833333326,
+          "humidity": 87.02143333333333,
+          "pressure": 1003.4756333333332,
+          "wind": {
+            "direction": 210.08751968333334,
+            "speed": 2.227628749999999
+          },
+          "precipitation": 21.870099999999994,
+          "uvIndex": 4.883333333333334,
+          "distance": null,
+          "lightIntensity": 17488.915716666666
+        },
+        {
+          "id": 4942618,
+          "recordedAt": "2026-07-30T03:00:00.000Z",
+          "heatIndex": 38.79350000000001,
+          "temperature": 31.090996666666666,
+          "humidity": 73.034187,
+          "pressure": 1003.9017666666666,
+          "wind": {
+            "direction": 77.67385350000002,
+            "speed": 2.159722833333334
+          },
+          "precipitation": 0,
+          "uvIndex": 9.85,
+          "distance": null,
+          "lightIntensity": 37882.388333333336
+        },
+        {
+          "id": 4941783,
+          "recordedAt": "2026-07-30T02:00:00.000Z",
+          "heatIndex": 39.06733333333332,
+          "temperature": 30.88673716666666,
+          "humidity": 75.80476866666665,
+          "pressure": 1004.4246833333331,
+          "wind": {
+            "direction": 81.88671916666662,
+            "speed": 2.3642213333333335
+          },
+          "precipitation": 0,
+          "uvIndex": 11,
+          "distance": null,
+          "lightIntensity": 54557.92372881356
+        },
+        {
+          "id": 4940951,
+          "recordedAt": "2026-07-30T01:00:00.000Z",
+          "heatIndex": 35.417666666666676,
+          "temperature": 28.980682333333334,
+          "humidity": 83.46438833333332,
+          "pressure": 1004.8087166666666,
+          "wind": {
+            "direction": 138.12991116666663,
+            "speed": 1.974737533333333
+          },
+          "precipitation": 0,
+          "uvIndex": 11,
+          "distance": null,
+          "lightIntensity": 43369.45783333334
+        },
+        {
+          "id": 4940124,
+          "recordedAt": "2026-07-30T00:00:00.000Z",
+          "heatIndex": 30.032000000000004,
+          "temperature": 26.654048500000005,
+          "humidity": 93.6546705,
+          "pressure": 1004.8181166666669,
+          "wind": {
+            "direction": 150.75762016666664,
+            "speed": 0.9077548333333334
+          },
+          "precipitation": 0,
+          "uvIndex": 8.683333333333334,
+          "distance": null,
+          "lightIntensity": 32244.09491525424
+        }
+      ]
+    }
+  }
+}

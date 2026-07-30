@@ -23,11 +23,12 @@
 ---
 
 ## Rule 3: Repository Integration & Multi-Repo Scope
-1. This workspace manages four core repositories located under `repos/`:
+1. This workspace manages core repositories located under `repos/`:
    - `repos/improve` (`https://github.com/shadcn/improve.git`)
    - `repos/ponytail` (`https://github.com/DietrichGebert/ponytail.git`)
    - `repos/obsidian-mind` (`https://github.com/breferrari/obsidian-mind.git`)
    - `repos/openscience` (`https://github.com/synthetic-sciences/openscience.git`)
+   - `repos/emulator` (`https://github.com/DiemasMichiels/emulator.git`)
 2. All automated orchestrations, code enhancements, security scans, and accessibility checks must operate seamlessly across these integrated components.
 
 ---

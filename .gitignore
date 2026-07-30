@@ -22,6 +22,8 @@ venv/
 env/
 .venv/
 
-# Temporary logs
+# Temporary logs & secrets
 .agent/logs/*.log
 .agent/logs/*_meta.json
+data/firebase_service_account.json
+data/kloudtech_config.json

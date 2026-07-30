@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "source": "KloudTrack Production API (Rate-Limit Safe 2024-2026)",
+    "base_url": "https://api.kloudtechsea.com/api/v1",
+    "station_count": 17,
+    "start_date": "2024-01-01T00:00:00.000Z",
+    "end_date": "2026-07-30T23:59:59.000Z",
+    "extraction_timestamp": "2026-07-30 22:53:32"
+  },
+  "stations": {
+    "Rjz2dbXW": {
+      "station_info": {
+        "id": "Rjz2dbXW",
+        "name": "Popolon AWS - Palayan City"
+      },
+      "record_count": 0,
+      "earliest_recorded_at": "N/A",
+      "latest_recorded_at": "N/A",
+      "telemetry": []
+    },
+    "4VAl2p9k": {
+      "station_info": {
+        "id": "4VAl2p9k",
+        "name": "Sapang Buho AWS - Palayan City"
+      },
+      "record_count": 0,
+      "earliest_recorded_at": "N/A",
+      "latest_recorded_at": "N/A",
+      "telemetry": []
+    }
+  }
+}

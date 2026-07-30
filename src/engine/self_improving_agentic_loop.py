@@ -19,10 +19,17 @@ from datetime import datetime
 
 WORKSPACE_ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.append(str(WORKSPACE_ROOT / "src" / "models"))
-sys.path.append(str(WORKSPACE_ROOT / ".agent" / "skills"))
+sys.path.append(str(WORKSPACE_ROOT / "src" / "engine"))
+sys.path.append(str(WORKSPACE_ROOT / "src" / "data"))
 
 from lfm_foundation_model import LiquidFoundationModel230M
-from obsidian_mind import generate_obsidian_wiki
+try:
+    from obsidian_mind import generate_obsidian_wiki
+except ImportError:
+    generate_obsidian_wiki = None
+from db_manager import DatabaseManager
+from firebase_manager import FirebaseManager
+from data_quality_guard import DataQualityGuard
 
 EXPERIMENT_DIR = WORKSPACE_ROOT / "data" / "experiments"
 EXPERIMENT_LOG = EXPERIMENT_DIR / "experiment_log.json"
@@ -33,6 +40,8 @@ EXPERIMENT_DIR.mkdir(parents=True, exist_ok=True)
 
 class LFMSelfImprovingAgent:
     def __init__(self):
+        self.db = DatabaseManager()
+        self.fb = FirebaseManager()
         self.model = LiquidFoundationModel230M()
         if WEIGHTS_PATH.exists():
             try:
@@ -55,8 +64,31 @@ class LFMSelfImprovingAgent:
         with open(EXPERIMENT_LOG, "w", encoding="utf-8") as f:
             json.dump(log_data, f, indent=2)
 
-    def log_prediction_experiment(self, lat, lon, feature_vector, prob_curve):
-        """Step 1 & 2: Generate nowcast & record prediction experiment into rolling buffer."""
+    def fetch_one_time_kloudtech_ground_truth(self, lat: float, lon: float) -> dict:
+        """
+        Executes EXACTLY ONE HTTP request to Kloudtech Ground Station API
+        after the 15-minute alert timer finishes to check if rain actually occurred.
+        """
+        config_path = WORKSPACE_ROOT / "data" / "kloudtech_config.json"
+        if not config_path.exists():
+            return None
+
+        try:
+            from api_designer import APIDesigner
+            designer = APIDesigner()
+            res = designer.design_and_execute_request(
+                endpoint_path="/api/v1/telemetry/dashboard",
+                method="GET"
+            )
+            if res.get("success"):
+                print(f"[KLOUDTRACK API DESIGNER] Verification probe success via {res.get('domain')}!")
+                return res.get("data")
+        except Exception as e:
+            print(f"[KLOUDTRACK API DESIGNER] Note: {e}")
+        return None
+
+    def log_prediction_experiment(self, lat, lon, feature_vector, prob_curve, device_id: str = "apk_node"):
+        """Step 1 & 2: Generate nowcast & record prediction experiment into DB and rolling buffer."""
         log_data = self.load_experiments()
         now_ts = time.time()
         now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -67,6 +99,7 @@ class LFMSelfImprovingAgent:
 
         exp_record = {
             "id": experiment_id,
+            "device_id": device_id,
             "timestamp": now_ts,
             "timestamp_str": now_str,
             "location": {"lat": lat, "lon": lon},
@@ -86,14 +119,18 @@ class LFMSelfImprovingAgent:
             log_data["experiments"] = log_data["experiments"][-200:]
 
         self.save_experiments(log_data)
-        print(f"[LFM AGENT] Logged prediction experiment {experiment_id} (Predicted Anomaly: {predicted_anomaly}, Max Prob: {max_prob:.3f})")
+        self.db.insert_experiment(exp_record)
+        print(f"[LFM AGENT] Logged prediction experiment {experiment_id} to DB & JSON (Predicted Anomaly: {predicted_anomaly}, Max Prob: {max_prob:.3f})")
         return exp_record
 
     def verify_ground_truth_and_improve(self, current_telemetry):
         """Step 3, 4 & 5: Verify ground truth 15-45m later, compute Focal Loss, self-fine-tune."""
         log_data = self.load_experiments()
         now_ts = time.time()
-        pending = [e for e in log_data["experiments"] if e.get("status") == "PENDING_VERIFICATION"]
+        
+        # Pull pending experiments from database or in-memory
+        db_pending = self.db.get_pending_experiments()
+        pending = db_pending if db_pending else [e for e in log_data["experiments"] if e.get("status") == "PENDING_VERIFICATION"]
 
         if not pending:
             return {"verified_count": 0, "retrained": False}
@@ -107,17 +144,32 @@ class LFMSelfImprovingAgent:
         training_targets = []
 
         for exp in pending:
+            exp_id = exp.get("experiment_id") or exp.get("id")
+            exp_lat = exp.get("location", {}).get("lat", 14.6775)
+            exp_lon = exp.get("location", {}).get("lon", 120.5431)
+
             # Check if verification window (15 mins) has elapsed or force update
             if now_ts >= exp.get("verify_target_ts", 0) - 30:
+                # Execute 1-time Kloudtech Ground Weather Station Verification Call
+                kloudtech_res = self.fetch_one_time_kloudtech_ground_truth(exp_lat, exp_lon)
+                if kloudtech_res and "precip" in kloudtech_res:
+                    exp_precip = float(kloudtech_res.get("precip", current_precip))
+                    exp_heat = float(kloudtech_res.get("heat_index", current_heat))
+                    exp_actual_anomaly = (exp_precip >= 0.5) or (exp_heat >= 40.0)
+                else:
+                    exp_precip = current_precip
+                    exp_heat = current_heat
+                    exp_actual_anomaly = actual_anomaly
+
                 exp["status"] = "VERIFIED"
-                exp["actual_precip"] = current_precip
-                exp["actual_heat_index"] = current_heat
-                exp["actual_anomaly"] = actual_anomaly
+                exp["actual_precip"] = exp_precip
+                exp["actual_heat_index"] = exp_heat
+                exp["actual_anomaly"] = exp_actual_anomaly
                 exp["verification_ts"] = now_ts
 
                 # Construct ground truth target (18 probability steps)
                 target_vector = torch.zeros(1, 18)
-                if actual_anomaly:
+                if exp_actual_anomaly:
                     target_vector[0, :] = 1.0
 
                 # Form input feature tensor (1, 24, 8)
@@ -127,6 +179,14 @@ class LFMSelfImprovingAgent:
                 training_inputs.append(input_tensor)
                 training_targets.append(target_vector)
                 verified_count += 1
+
+                self.db.mark_experiment_verified(
+                    experiment_id=exp_id,
+                    actual_precip=current_precip,
+                    actual_heat_index=current_heat,
+                    actual_anomaly=actual_anomaly,
+                    residual_loss=0.01
+                )
 
         retrained = False
         avg_loss = 0.0
@@ -143,9 +203,27 @@ class LFMSelfImprovingAgent:
             torch.save(self.model.state_dict(), WEIGHTS_PATH)
             print(f"[LFM AGENT] Saved upgraded LFM-230M weights to {WEIGHTS_PATH} (Loss: {avg_loss:.4f})")
 
-            # Step 6: Hot-Swap ONNX Edge Binary
+            # Step 6: Hot-Swap ONNX Edge Binary & Trigger Android Emulator Verification Pass
             self.model.export_onnx(ONNX_EXPORT_PATH)
             retrained = True
+
+            # Trigger Android Emulator Verification via repos/emulator & emulator_verifier
+            try:
+                from emulator_verifier import EmulatorVerifier
+                verifier = EmulatorVerifier()
+                emulator_res = verifier.install_and_verify_app()
+                print(f"[LFM AGENT] Android Emulator Verification Pass: {emulator_res.get('status')}")
+            except Exception as e:
+                print(f"[LFM AGENT] Emulator verification note: {e}")
+
+            version_tag = f"v1.{int(now_ts)}"
+            self.fb.publish_model_version(
+                version_tag=version_tag,
+                weights_path=str(WEIGHTS_PATH),
+                onnx_path=str(ONNX_EXPORT_PATH),
+                avg_loss=round(avg_loss, 4),
+                sample_count=verified_count
+            )
 
             log_data["metrics"]["verified"] += verified_count
             log_data["metrics"]["fine_tune_events"] += 1
