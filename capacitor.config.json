@@ -3,7 +3,6 @@
   "appName": "KloudAlert",
   "webDir": "web_app",
   "server": {
-    "url": "https://benben000000.github.io/kloudalert/",
     "androidScheme": "https",
     "cleartext": true
   },
