@@ -44,7 +44,7 @@ STATIONS = [
 YEAR_WINDOWS = [
     ("2024-01-01T00:00:00.000Z", "2024-12-31T23:59:59.000Z"),
     ("2025-01-01T00:00:00.000Z", "2025-12-31T23:59:59.000Z"),
-    ("2026-01-01T00:00:00.000Z", "2026-07-30T23:59:59.000Z")
+    ("2026-01-01T00:00:00.000Z", "2026-08-05T23:59:59.000Z")
 ]
 
 def fetch_url_with_backoff(url, max_retries=4):
@@ -116,7 +116,7 @@ def run_rate_limit_safe_extraction():
             "base_url": BASE_URL,
             "station_count": len(STATIONS),
             "start_date": "2024-01-01T00:00:00.000Z",
-            "end_date": "2026-07-30T23:59:59.000Z",
+            "end_date": "2026-08-05T23:59:59.000Z",
             "extraction_timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
         },
         "stations": {}

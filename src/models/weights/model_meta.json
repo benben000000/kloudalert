@@ -1,18 +1,10 @@
 {
   "input_dim": 8,
-  "hidden_dim": 32,
+  "hidden_dim": 64,
   "output_steps": 18,
-  "final_loss": 0.017585,
-  "epochs": 15,
-  "feature_names": [
-    "temp",
-    "humidity",
-    "pressure",
-    "precip",
-    "wind",
-    "p_delta",
-    "t_delta",
-    "heat_index"
-  ],
-  "weights_path": "D:\\lnn-mobile-weather\\src\\models\\weights\\lnn_weather_model.pt"
+  "weights_path": "D:\\lnn-mobile-weather\\src\\models\\weights\\lfm_230m_weights.pt",
+  "onnx_path": "D:\\lnn-mobile-weather\\web_app\\lnn_weather_model.onnx",
+  "trained_samples": 102746,
+  "avg_loss": 0.11529,
+  "updated_at": "2026-07-31 18:25:37"
 }

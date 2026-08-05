@@ -40,8 +40,12 @@
       ],
       "max_prob": 0.08,
       "predicted_anomaly": false,
-      "status": "PENDING_VERIFICATION",
-      "verify_target_ts": 1785363326.3209672
+      "status": "VERIFIED",
+      "verify_target_ts": 1785363326.3209672,
+      "actual_precip": 0.0,
+      "actual_heat_index": 29.70683,
+      "actual_anomaly": false,
+      "verification_ts": 1785494826.9868438
     },
     {
       "id": "exp_1785362511107",
@@ -83,14 +87,18 @@
       ],
       "max_prob": 0.531990647315979,
       "predicted_anomaly": false,
-      "status": "PENDING_VERIFICATION",
-      "verify_target_ts": 1785363411.1074805
+      "status": "VERIFIED",
+      "verify_target_ts": 1785363411.1074805,
+      "actual_precip": 0.0,
+      "actual_heat_index": 29.70683,
+      "actual_anomaly": false,
+      "verification_ts": 1785494826.9868438
     }
   ],
   "metrics": {
     "total_predictions": 2,
-    "verified": 0,
-    "fine_tune_events": 0,
-    "avg_loss": 0.0
+    "verified": 2,
+    "fine_tune_events": 1,
+    "avg_loss": 1.8794
   }
 }

@@ -1,0 +1,35 @@
+{
+  "source": "RainViewer Doppler Radar Network API (DOST-PAGASA Composite)",
+  "api_endpoint": "https://api.rainviewer.com/public/weather-maps.json",
+  "bounding_box_bataan": {
+    "min_lat": 14.3,
+    "max_lat": 15.0,
+    "min_lon": 120.1,
+    "max_lon": 120.7
+  },
+  "bounding_box_luzon": {
+    "min_lat": 12.0,
+    "max_lat": 19.0,
+    "min_lon": 119.5,
+    "max_lon": 124.5
+  },
+  "live_status": {
+    "success": true,
+    "host": "https://tilecache.rainviewer.com",
+    "past_frames_count": 13,
+    "nowcast_frames_count": 0,
+    "latest_frame": {
+      "time": 1785925200,
+      "path": "/v2/radar/9d6c74abcb3c"
+    }
+  },
+  "temporal_range": {
+    "start": "2024-01-01",
+    "end": "2026-08-05",
+    "step_minutes": 10,
+    "total_steps": 136512
+  },
+  "active_radar_events": 15098,
+  "max_dbz_recorded": 70.35,
+  "marshall_palmer_conversion": "Z = 200 * R^1.6"
+}

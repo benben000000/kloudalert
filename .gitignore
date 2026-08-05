@@ -22,7 +22,12 @@ venv/
 env/
 .venv/
 
-# Temporary logs & secrets
+# Large binary datasets & weights
+*.pt
+*.bak
+data/db/
+data/processed/*.pt
+repos/
 .agent/logs/*.log
 .agent/logs/*_meta.json
 data/firebase_service_account.json

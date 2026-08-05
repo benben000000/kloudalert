@@ -50,7 +50,7 @@ class LiquidCell230M(nn.Module):
         return h_next
 
 class LiquidFoundationModel230M(nn.Module):
-    def __init__(self, input_dim=8, hidden_dim=64, output_steps=18):
+    def __init__(self, input_dim=12, hidden_dim=64, output_steps=18):
         super(LiquidFoundationModel230M, self).__init__()
         self.input_dim = input_dim
         self.hidden_dim = hidden_dim

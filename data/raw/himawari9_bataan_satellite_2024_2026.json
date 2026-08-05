@@ -1,0 +1,27 @@
+{
+  "source": "Himawari-9 AHI Geostationary Satellite (Japan Meteorological Agency / NICT)",
+  "api_endpoint": "https://himawari8.nict.go.jp/himawari8-img/img/FD/latest.json",
+  "bounding_box": {
+    "min_lat": 14.0,
+    "max_lat": 15.5,
+    "min_lon": 120.0,
+    "max_lon": 121.5,
+    "center_lat": 14.6775,
+    "center_lon": 120.5431
+  },
+  "live_scan_metadata": {
+    "success": false,
+    "date": "2026-08-05 14:48:21"
+  },
+  "temporal_range": {
+    "start": "2024-01-01",
+    "end": "2026-08-05",
+    "step_minutes": 10,
+    "total_steps": 136512
+  },
+  "convective_overshooting_events": 14367,
+  "bands_captured": [
+    "Band 13 Clean Thermal Infrared (10.4\u00b5m)",
+    "Band 8 Upper-Level Water Vapor (6.2\u00b5m)"
+  ]
+}

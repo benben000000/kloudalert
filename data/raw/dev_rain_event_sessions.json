@@ -1,0 +1,17 @@
+[
+  {
+    "event_id": "evt_1785930225",
+    "start_timestamp": "2026-08-05 19:43:45",
+    "start_time": 1785930225.900186,
+    "user_gps": {
+      "lat": 14.7211,
+      "lon": 120.5342
+    },
+    "intensity_category": "HEAVY",
+    "station_gauge_initial_val": 0.0,
+    "tipping_bucket_lag_mins": 12.5,
+    "status": "RAIN_STOPPED",
+    "stop_timestamp": "2026-08-05 19:43:46",
+    "duration_mins": 0.0
+  }
+]

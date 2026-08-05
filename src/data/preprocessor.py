@@ -9,26 +9,17 @@ import os
 import sys
 import json
 import math
-from pathlib import Path
-
 WORKSPACE_ROOT = Path(__file__).resolve().parent.parent.parent
 DATA_RAW_PATH = WORKSPACE_ROOT / "data" / "raw" / "bataan_weather_historical.json"
 DATA_PROCESSED_DIR = WORKSPACE_ROOT / "data" / "processed"
 DATA_PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
 
+sys.path.append(str(WORKSPACE_ROOT / "src" / "engine"))
+from romps_heat_index import compute_romps_heat_index_celsius, compute_wet_bulb_temperature
+
 def compute_heat_index(temp_c, humidity):
-    """
-    Computes Heat Index (°C) using Rothfusz regression equation approximation.
-    """
-    temp_f = (temp_c * 9.0 / 5.0) + 32.0
-    if temp_f < 80.0:
-        hi_f = 0.5 * (temp_f + 61.0 + ((temp_f - 68.0) * 1.2) + (humidity * 0.094))
-    else:
-        hi_f = -42.379 + 2.04901523 * temp_f + 10.14333127 * humidity \
-               - 0.22475541 * temp_f * humidity - 0.00683783 * temp_f**2 \
-               - 0.05481717 * humidity**2 + 0.00122874 * temp_f**2 * humidity \
-               + 0.00085282 * temp_f * humidity**2 - 0.00000199 * temp_f**2 * humidity**2
-    return (hi_f - 32.0) * 5.0 / 9.0
+    """Computes Heat Index (°C) using David Romps extended physiological formulation."""
+    return compute_romps_heat_index_celsius(temp_c, humidity)
 
 class WeatherPreprocessor:
     def __init__(self, raw_data_path=DATA_RAW_PATH):

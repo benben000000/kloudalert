@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """
-ONNX Model Exporter Module
-Exports trained PyTorch Liquid Neural Network (LTC) model to ONNX format
-for low-latency mobile edge inference.
+ONNX Model Exporter Module for PIMCAN-Liquid Architecture
+(`src/models/export_onnx.py`)
+
+Exports trained PyTorch PIMCAN-Liquid model to ONNX format for low-latency web/mobile edge inference.
 """
 
 import os
@@ -11,87 +12,61 @@ import json
 import torch
 from pathlib import Path
 
-# Add parent directory for module imports
 sys.path.append(str(Path(__file__).resolve().parent))
-from lnn_model import LiquidNeuralNetwork
+from pimcan_liquid_model import PIMCANLiquidModel
 
 WORKSPACE_ROOT = Path(__file__).resolve().parent.parent.parent
 WEIGHTS_DIR = WORKSPACE_ROOT / "src" / "models" / "weights"
-META_PATH = WEIGHTS_DIR / "model_meta.json"
-ONNX_OUT_PATH = WEIGHTS_DIR / "lnn_weather_model.onnx"
+WEIGHTS_PATH = WEIGHTS_DIR / "pimcan_liquid_weights.pt"
+WEB_APP_ONNX_PATH = WORKSPACE_ROOT / "web_app" / "lnn_weather_model.onnx"
 
-def export_lnn_to_onnx():
-    if not META_PATH.exists():
-        raise FileNotFoundError(f"Model metadata not found at {META_PATH}")
+class ONNXWrapper(torch.nn.Module):
+    def __init__(self, core_model):
+        super().__init__()
+        self.core = core_model
 
-    with open(META_PATH, "r", encoding="utf-8") as f:
-        meta = json.load(f)
+    def forward(self, st, sat, lgt, rdr):
+        out = self.core(st, sat, lgt, rdr)
+        return out["anomaly_probability_curve"]
 
-    input_dim = meta["input_dim"]
-    hidden_dim = meta["hidden_dim"]
-    output_steps = meta["output_steps"]
-    weights_path = Path(meta["weights_path"])
+def export_pimcan_to_onnx():
+    print(f"[EXPORT ONNX] Loading PIMCAN-Liquid model from {WEIGHTS_PATH}...")
+    model = PIMCANLiquidModel(station_dim=8, sat_dim=4, hidden_dim=32, fused_dim=64, output_steps=18)
+    if WEIGHTS_PATH.exists():
+        model.load_state_dict(torch.load(WEIGHTS_PATH, map_location=torch.device('cpu')))
+        print("[EXPORT ONNX] PyTorch weights loaded successfully.")
+    else:
+        print("[EXPORT ONNX] Warning: Weights file not found, exporting baseline architecture.")
 
-    print(f"Loading trained PyTorch model from {weights_path}...")
-    model = LiquidNeuralNetwork(input_dim=input_dim, hidden_dim=hidden_dim, output_steps=output_steps)
-    model.load_state_dict(torch.load(weights_path, map_location=torch.device('cpu')))
-    model.eval()
+    wrapper = ONNXWrapper(model)
+    wrapper.eval()
 
-    # Dummy input sequence: (batch_size=1, seq_len=24, input_dim=8)
-    dummy_input = torch.randn(1, 24, input_dim, dtype=torch.float32)
+    dummy_st = torch.randn(1, 24, 8)
+    dummy_sat = torch.randn(1, 24, 4)
+    dummy_lgt = torch.randn(1, 24, 4, 32, 32)
+    dummy_rdr = torch.randn(1, 24, 1)
 
-    # Export TorchScript for Native Mobile Edge (PyTorch Mobile / C++ LibTorch)
-    TS_OUT_PATH = WEIGHTS_DIR / "lnn_weather_model.ptc"
-    print(f"Exporting model to TorchScript Mobile format at {TS_OUT_PATH}...")
-    traced_model = torch.jit.trace(model, dummy_input)
-    traced_model.save(str(TS_OUT_PATH))
-    ts_size_kb = round(os.path.getsize(TS_OUT_PATH) / 1024.0, 2)
-    print(f"TorchScript Mobile Export Successful! File Size: {ts_size_kb} KB")
-
-    # Export ONNX if onnxscript / ONNX dependencies available
-    WEB_APP_ONNX_PATH = WORKSPACE_ROOT / "web_app" / "lnn_weather_model.onnx"
-    onnx_exported = False
-    onnx_size_kb = 0.0
+    WEB_APP_ONNX_PATH.parent.mkdir(parents=True, exist_ok=True)
+    
     try:
-        print(f"Exporting model to ONNX at {ONNX_OUT_PATH} and {WEB_APP_ONNX_PATH}...")
         torch.onnx.export(
-            model,
-            dummy_input,
-            str(ONNX_OUT_PATH),
-            export_params=True,
-            opset_version=14,
-            do_constant_folding=True,
-            input_names=['input_weather_sequence'],
-            output_names=['anomaly_probability_curve'],
-            dynamo=False
-        )
-        torch.onnx.export(
-            model,
-            dummy_input,
+            wrapper,
+            (dummy_st, dummy_sat, dummy_lgt, dummy_rdr),
             str(WEB_APP_ONNX_PATH),
             export_params=True,
             opset_version=14,
             do_constant_folding=True,
-            input_names=['input_weather_sequence'],
-            output_names=['anomaly_probability_curve'],
+            input_names=["station_seq", "sat_seq", "lightning_grid_seq", "radar_seq"],
+            output_names=["anomaly_probability_curve"],
             dynamo=False
         )
-        onnx_size_kb = round(os.path.getsize(WEB_APP_ONNX_PATH) / 1024.0, 2)
-        onnx_exported = True
-        print(f"ONNX Export Successful! File Size: {onnx_size_kb} KB at {WEB_APP_ONNX_PATH}")
+        size_kb = round(os.path.getsize(WEB_APP_ONNX_PATH) / 1024.0, 2)
+        print(f"[EXPORT ONNX] Export Successful! ONNX Binary Size: {size_kb} KB at {WEB_APP_ONNX_PATH}")
+        return {"success": True, "onnx_path": str(WEB_APP_ONNX_PATH), "size_kb": size_kb}
     except Exception as e:
-        print(f"ONNX export exception: {type(e).__name__} - {e}. TorchScript Mobile format ({TS_OUT_PATH}) ready for edge deployment.")
-
-    return {
-        "success": True,
-        "torchscript_path": str(TS_OUT_PATH),
-        "torchscript_size_kb": ts_size_kb,
-        "onnx_exported": onnx_exported,
-        "onnx_size_kb": onnx_size_kb,
-        "input_shape": [1, 24, input_dim],
-        "output_shape": [1, output_steps]
-    }
+        print(f"[EXPORT ONNX] Export Error: {e}")
+        return {"success": False, "error": str(e)}
 
 if __name__ == "__main__":
-    res = export_lnn_to_onnx()
+    res = export_pimcan_to_onnx()
     print(json.dumps(res, indent=2))
