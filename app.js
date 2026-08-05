@@ -262,28 +262,46 @@ function updateUI() {
         rainIcon.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/></svg>';
     }
 
-    // Advisory — sync with warning state
+    // ─── DYNAMIC MULTI-FACTOR ADVISORY ENGINE ───
     if (pimcanRainStatus === "raining" && pr >= 7) {
-        setText('advisory-label', 'HEAVY RAIN WARNING');
-        setText('advisory-text', 'Stay indoors if possible. Drive slowly with headlights on. Avoid flood-prone low areas.');
+        setText('advisory-label', 'HEAVY RAINFALL WARNING');
+        setText('advisory-text', 'Stay indoors if possible. Drive slowly with headlights on. Avoid flood-prone low-lying areas and stream crossings.');
     } else if (pimcanRainStatus === "raining") {
-        setText('advisory-label', 'RAIN ADVISORY ACTIVE');
-        setText('advisory-text', 'Bring an umbrella or raincoat outdoors. Roads may be slippery — drive carefully.');
+        setText('advisory-label', 'ACTIVE RAIN ADVISORY');
+        setText('advisory-text', 'Carry an umbrella or raincoat. Roads, footpaths, and driving surfaces are wet and slippery — proceed with caution.');
+    } else if (userGroundTruthState === 'NOT_RAINING' || (h >= 88 && pr === 0 && currentRadarDBZ < 15)) {
+        // Post-rain or wet ground hazard
+        if (h >= 85) {
+            setText('advisory-label', 'POST-RAIN WET SURFACE ADVISORY');
+            setText('advisory-text', `Rain has stopped, but relative humidity is ${h.toFixed(0)}%. Roads, pavements, and walkways remain wet and slick. Watch for standing water.`);
+        } else if (hi >= 35) {
+            setText('advisory-label', 'POST-RAIN HUMID HEAT ADVISORY');
+            setText('advisory-text', `Rain cleared, but evaporation has raised the heat index to ${Math.round(hi)}°C (${h.toFixed(0)}% humidity). Stay hydrated.`);
+        } else {
+            setText('advisory-label', 'WEATHER CLEARING');
+            setText('advisory-text', 'Rain has stopped and conditions are clearing. Exercise caution on lingering wet surfaces.');
+        }
     } else if (pimcanRainStatus === "likely") {
-        setText('advisory-label', 'RAIN EXPECTED SOON');
-        setText('advisory-text', 'Carry an umbrella before heading out. Consider bringing outdoor items inside.');
+        setText('advisory-label', 'INCOMING RAIN EXPECTED');
+        setText('advisory-text', 'Doppler radar and cloud moisture indicate rain approaching within 15-30 mins. Take shelter or secure outdoor laundry.');
     } else if (hi >= 40) {
-        setText('advisory-label', 'DANGEROUS HEAT');
-        setText('advisory-text', `Heat index is ${Math.round(hi)}°C. Avoid sun exposure. Stay hydrated and shaded.`);
+        setText('advisory-label', 'EXTREME HEAT WARNING');
+        setText('advisory-text', `Heat index is ${Math.round(hi)}°C. High risk of heat exhaustion or heat stroke. Stay shaded, drink water frequently, and avoid heavy outdoor labor.`);
     } else if (hi >= 35) {
-        setText('advisory-label', 'HIGH HEAT INDEX');
-        setText('advisory-text', `Feels like ${Math.round(hi)}°C. Stay hydrated and limit peak afternoon exposure.`);
-    } else if (w >= 30) {
-        setText('advisory-label', 'STRONG WIND ADVISORY');
-        setText('advisory-text', `Winds at ${w.toFixed(0)} km/h. Secure loose items and drive motorcycles with caution.`);
+        setText('advisory-label', 'HIGH HEAT INDEX ADVISORY');
+        setText('advisory-text', `RealFeel heat index is ${Math.round(hi)}°C. Stay hydrated, wear light clothing, and limit direct sun exposure during peak hours.`);
+    } else if (w >= 25) {
+        setText('advisory-label', 'HIGH WIND ADVISORY');
+        setText('advisory-text', `Wind gusts at ${w.toFixed(0)} km/h. Secure loose outdoor objects and exercise extra care when driving motorcycles or high-profile vehicles.`);
+    } else if (p <= 1004) {
+        setText('advisory-label', 'LOW PRESSURE INSTABILITY NOTICE');
+        setText('advisory-text', `Barometric pressure is low (${p.toFixed(1)} hPa). Atmospheric instability may trigger sudden convective showers or gusts.`);
+    } else if (h >= 88) {
+        setText('advisory-label', 'MUGGY ATMOSPHERIC NOTICE');
+        setText('advisory-text', `High atmospheric moisture (${h.toFixed(0)}% relative humidity). Air feels heavy and damp. Favorable conditions for cloud development.`);
     } else {
-        setText('advisory-label', 'GOOD CONDITIONS');
-        setText('advisory-text', 'Weather is clear and comfortable for outdoor activities.');
+        setText('advisory-label', 'FAVORABLE WEATHER');
+        setText('advisory-text', `Comfortable conditions. Temperature is ${Math.round(t)}°C, wind is ${w.toFixed(0)} km/h, and atmosphere is stable.`);
     }
 
     // Stats
