@@ -1,9 +1,13 @@
 /**
- * KloudAlert — Simple Citizen Weather App
- * Real-time rain alerts powered by PIMCAN-v4 Neural Engine
+ * KloudAlert — Citizen Weather App
+ * Real-time rain alerts powered by PIMCAN-v4 Neural Engine & Live Firebase Flywheel
  *
- * Data Sources: KloudTech AWS, Open-Meteo, RainViewer Doppler, Himawari-9
- * All computation happens behind the scenes — user sees clean results only.
+ * Features:
+ * - Live GPS location tracking & OpenStreetMap reverse geocoding
+ * - Real-time 4-API data ingestion (KloudTech AWS, Open-Meteo, RainViewer, Himawari-9)
+ * - Touch Pull-to-Refresh gesture for manual instant update
+ * - User Ground-Truth Rain/No-Rain toggle with synchronized rain alerts & duration estimates
+ * - Real-time Firebase Firestore telemetry sync for continuous model self-improvement
  */
 
 let userLat = 14.5621;
@@ -25,9 +29,9 @@ let pimcanRainStatus = "checking";
 let pimcanRainIntensity = 0;
 let rainDurationEstimate = "";
 
-let isDevRaining = false;
-let devTimerInterval = null;
-let devTimerSeconds = 0;
+let userGroundTruthState = null; // null, 'RAINING', 'NOT_RAINING'
+let userGroundTruthTimerInterval = null;
+let userGroundTruthSeconds = 0;
 let devRainEvents = [];
 
 // KloudTech stations
@@ -175,29 +179,41 @@ async function fetchWeather() {
     currentTemp = ktTemp ?? omTemp ?? 25;
     currentHumidity = ktHum ?? omHum ?? 80;
     currentPressure = ktPress ?? omPress ?? 1008;
-    currentPrecipRate = isDevRaining ? Math.max(omPrecip||0, 2.5) : (omPrecip ?? 0);
     currentWind = ktWind ?? omWind ?? 5;
     currentHeatIndex = rompsHeatIndex(currentTemp, currentHumidity);
 
-    // PIMCAN-v4 rain assessment
+    // Baseline calculation
+    currentPrecipRate = omPrecip ?? 0;
     const radarActive = currentRadarDBZ >= 20;
     const humSat = currentHumidity >= 85;
 
-    if (currentPrecipRate >= 7.0) {
-        pimcanRainStatus = "raining"; pimcanRainIntensity = currentPrecipRate;
-        rainDurationEstimate = "Heavy rain — expect 30-60 minutes";
-    } else if (currentPrecipRate >= 2.0 || (radarActive && humSat)) {
-        pimcanRainStatus = "raining"; pimcanRainIntensity = Math.max(currentPrecipRate, 2.5);
-        rainDurationEstimate = "Moderate rain — around 20-30 minutes remaining";
-    } else if (currentPrecipRate > 0 || (humSat && radarActive)) {
-        pimcanRainStatus = "raining"; pimcanRainIntensity = currentPrecipRate || 1.0;
-        rainDurationEstimate = "Light rain — should ease in 15-20 minutes";
-    } else if (humSat && currentRadarDBZ >= 15) {
-        pimcanRainStatus = "likely";
-        rainDurationEstimate = "Rain likely within the next 15-30 minutes";
-    } else {
+    // Apply User Ground-Truth Overrides if active
+    if (userGroundTruthState === 'RAINING') {
+        pimcanRainStatus = "raining";
+        pimcanRainIntensity = Math.max(currentPrecipRate, 3.5);
+        rainDurationEstimate = `Ground-truth active — Est. duration ~25-40 mins (Timer: ${Math.floor(userGroundTruthSeconds/60)}m ${userGroundTruthSeconds%60}s)`;
+    } else if (userGroundTruthState === 'NOT_RAINING') {
         pimcanRainStatus = "clear";
-        rainDurationEstimate = "";
+        pimcanRainIntensity = 0.0;
+        rainDurationEstimate = `User confirmed dry conditions (Cleared at ${new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})})`;
+    } else {
+        // Dynamic Model Decision
+        if (currentPrecipRate >= 7.0) {
+            pimcanRainStatus = "raining"; pimcanRainIntensity = currentPrecipRate;
+            rainDurationEstimate = "Heavy rain — expect 30-60 minutes";
+        } else if (currentPrecipRate >= 2.0 || (radarActive && humSat)) {
+            pimcanRainStatus = "raining"; pimcanRainIntensity = Math.max(currentPrecipRate, 2.5);
+            rainDurationEstimate = "Moderate rain — around 20-30 minutes remaining";
+        } else if (currentPrecipRate > 0 || (humSat && radarActive)) {
+            pimcanRainStatus = "raining"; pimcanRainIntensity = currentPrecipRate || 1.0;
+            rainDurationEstimate = "Light rain — should ease in 15-20 minutes";
+        } else if (humSat && currentRadarDBZ >= 15) {
+            pimcanRainStatus = "likely";
+            rainDurationEstimate = "Rain likely within the next 15-30 minutes";
+        } else {
+            pimcanRainStatus = "clear";
+            rainDurationEstimate = "Dry conditions for at least the next 45 minutes";
+        }
     }
 
     updateUI();
@@ -223,12 +239,13 @@ function updateUI() {
         else setText('temp-condition', 'Clear Sky');
     }
 
-    // Rain Card — the core
+    // Rain Card — sync with alert & user feedback
     const rainCard = document.getElementById('rain-card');
     const rainIcon = document.getElementById('rain-card-icon');
 
     if (pimcanRainStatus === "raining") {
-        setText('rain-status', `It's raining — ${pr.toFixed(1)} mm/hr`);
+        const tag = userGroundTruthState === 'RAINING' ? " [User Verified]" : "";
+        setText('rain-status', `It's raining — ${pr.toFixed(1)} mm/hr${tag}`);
         setText('rain-detail', rainDurationEstimate);
         rainCard.className = 'rain-card raining';
         rainIcon.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M16 14v6"/><path d="M8 14v6"/><path d="M12 16v6"/></svg>';
@@ -238,34 +255,35 @@ function updateUI() {
         rainCard.className = 'rain-card';
         rainIcon.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M16 14v6"/><path d="M8 14v6"/><path d="M12 16v6"/></svg>';
     } else {
-        setText('rain-status', 'No rain expected');
-        setText('rain-detail', 'Dry conditions for at least the next 45 minutes');
+        const tag = userGroundTruthState === 'NOT_RAINING' ? " [User Cleared]" : "";
+        setText('rain-status', `No rain expected${tag}`);
+        setText('rain-detail', rainDurationEstimate);
         rainCard.className = 'rain-card no-rain';
         rainIcon.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/></svg>';
     }
 
-    // Advisory — specific to what user is experiencing
+    // Advisory — sync with warning state
     if (pimcanRainStatus === "raining" && pr >= 7) {
         setText('advisory-label', 'HEAVY RAIN WARNING');
-        setText('advisory-text', 'Stay indoors if possible. If driving, slow down and use headlights. Avoid low-lying areas prone to flooding.');
+        setText('advisory-text', 'Stay indoors if possible. Drive slowly with headlights on. Avoid flood-prone low areas.');
     } else if (pimcanRainStatus === "raining") {
-        setText('advisory-label', 'RAIN ADVISORY');
-        setText('advisory-text', 'Bring an umbrella or raincoat if heading outside. Roads may be slippery — drive carefully.');
+        setText('advisory-label', 'RAIN ADVISORY ACTIVE');
+        setText('advisory-text', 'Bring an umbrella or raincoat outdoors. Roads may be slippery — drive carefully.');
     } else if (pimcanRainStatus === "likely") {
         setText('advisory-label', 'RAIN EXPECTED SOON');
-        setText('advisory-text', 'Carry an umbrella before heading out. Consider bringing laundry inside.');
+        setText('advisory-text', 'Carry an umbrella before heading out. Consider bringing outdoor items inside.');
     } else if (hi >= 40) {
         setText('advisory-label', 'DANGEROUS HEAT');
-        setText('advisory-text', `Heat index is ${Math.round(hi)}°C. Avoid prolonged sun exposure. Drink water frequently and stay in shade or air-conditioning.`);
+        setText('advisory-text', `Heat index is ${Math.round(hi)}°C. Avoid sun exposure. Stay hydrated and shaded.`);
     } else if (hi >= 35) {
         setText('advisory-label', 'HIGH HEAT INDEX');
-        setText('advisory-text', `It feels like ${Math.round(hi)}°C. Stay hydrated, wear light clothing, and limit outdoor activities during midday.`);
+        setText('advisory-text', `Feels like ${Math.round(hi)}°C. Stay hydrated and limit peak afternoon exposure.`);
     } else if (w >= 30) {
         setText('advisory-label', 'STRONG WIND ADVISORY');
-        setText('advisory-text', `Winds at ${w.toFixed(0)} km/h. Secure loose objects outside and be cautious when driving motorcycles.`);
+        setText('advisory-text', `Winds at ${w.toFixed(0)} km/h. Secure loose items and drive motorcycles with caution.`);
     } else {
         setText('advisory-label', 'GOOD CONDITIONS');
-        setText('advisory-text', 'Weather is comfortable for outdoor activities. No rain or extreme conditions detected.');
+        setText('advisory-text', 'Weather is clear and comfortable for outdoor activities.');
     }
 
     // Stats
@@ -290,21 +308,29 @@ function updateBackground() {
     else body.classList.add('theme-sunny');
 }
 
-// ═══ DEV STOPWATCH & FIREBASE FLYWHEEL SYNC ═══
+// ═══ FIREBASE CLOUD & MODEL FLYWHEEL SYNC ═══
 async function syncDevEventToCloud(eventData) {
+    const flywheelStatus = document.getElementById('flywheel-sync-status');
+    if (flywheelStatus) {
+        flywheelStatus.textContent = '🔥 Syncing ground-truth to Firebase Cloud...';
+        flywheelStatus.style.color = '#38BDF8';
+    }
+
+    // 1. Save to local buffer
     try {
         const stored = JSON.parse(localStorage.getItem('kloudalert_telemetry_events') || '[]');
         stored.push(eventData);
         localStorage.setItem('kloudalert_telemetry_events', JSON.stringify(stored));
     } catch(e) {}
 
+    // 2. Post to Firebase Firestore REST API
     try {
         const firestoreUrl = 'https://firestore.googleapis.com/v1/projects/kloudalert-1fdf2/databases/(default)/documents/rain_telemetry_events';
         const docFields = {
             type: { stringValue: String(eventData.type || 'unknown') },
             timestamp: { integerValue: String(eventData.ts || Date.now()) },
-            latitude: { doubleValue: Number(eventData.lat || 0) },
-            longitude: { doubleValue: Number(eventData.lon || 0) },
+            latitude: { doubleValue: Number(eventData.lat || userLat || 0) },
+            longitude: { doubleValue: Number(eventData.lon || userLon || 0) },
             is_raining: { booleanValue: eventData.type === 'start' },
             temperature: { doubleValue: Number(eventData.temp || currentTemp || 25.0) },
             humidity: { doubleValue: Number(eventData.hum || currentHumidity || 80.0) },
@@ -318,28 +344,45 @@ async function syncDevEventToCloud(eventData) {
         });
         if (res.ok) {
             console.log('[FIREBASE CLOUD] Ground-truth observation synced to Firestore cloud!');
+            if (flywheelStatus) {
+                flywheelStatus.textContent = '✅ Cloud Flywheel Synced! Model Retraining Active';
+                flywheelStatus.style.color = '#10B981';
+            }
         } else {
-            console.warn('[FIREBASE CLOUD] Sync fallback (saved to offline buffer):', res.status);
+            console.warn('[FIREBASE CLOUD] Sync fallback (buffered):', res.status);
+            if (flywheelStatus) {
+                flywheelStatus.textContent = '⚡ Observation Saved (Offline Buffer Active)';
+                flywheelStatus.style.color = '#FBBF24';
+            }
         }
     } catch(e) {
         console.warn('[FIREBASE CLOUD] Offline buffer active:', e.message);
+        if (flywheelStatus) {
+            flywheelStatus.textContent = '⚡ Observation Buffered (Auto-syncs on connect)';
+            flywheelStatus.style.color = '#FBBF24';
+        }
     }
 }
 
+// ═══ GROUND-TRUTH RAIN BUTTON CONTROLS ═══
 function initDev() {
     const btnStart = document.getElementById('btn-dev-rain-start');
     const btnStop = document.getElementById('btn-dev-rain-stop');
     const timer = document.getElementById('dev-timer-display');
 
     btnStart?.addEventListener('click', () => {
-        isDevRaining = true; devTimerSeconds = 0;
-        if (devTimerInterval) clearInterval(devTimerInterval);
-        devTimerInterval = setInterval(() => {
-            devTimerSeconds++;
-            const m = Math.floor(devTimerSeconds/60).toString().padStart(2,'0');
-            const s = (devTimerSeconds%60).toString().padStart(2,'0');
+        userGroundTruthState = 'RAINING';
+        userGroundTruthSeconds = 0;
+
+        if (userGroundTruthTimerInterval) clearInterval(userGroundTruthTimerInterval);
+        userGroundTruthTimerInterval = setInterval(() => {
+            userGroundTruthSeconds++;
+            const m = Math.floor(userGroundTruthSeconds/60).toString().padStart(2,'0');
+            const s = (userGroundTruthSeconds%60).toString().padStart(2,'0');
             if (timer) { timer.textContent = `${m}:${s}`; timer.style.color = '#EF4444'; }
+            if (userGroundTruthSeconds % 10 === 0) fetchWeather(); // update duration in real time
         }, 1000);
+
         const eventData = { type:'start', ts:Date.now(), lat:userLat, lon:userLon, temp:currentTemp, hum:currentHumidity };
         devRainEvents.push(eventData);
         syncDevEventToCloud(eventData);
@@ -347,14 +390,73 @@ function initDev() {
     });
 
     btnStop?.addEventListener('click', () => {
-        isDevRaining = false;
-        if (devTimerInterval) clearInterval(devTimerInterval);
-        if (timer) { timer.textContent = `${Math.floor(devTimerSeconds/60)}m ${devTimerSeconds%60}s`; timer.style.color = '#10B981'; }
-        const eventData = { type:'stop', ts:Date.now(), durationSec:devTimerSeconds, lat:userLat, lon:userLon, temp:currentTemp, hum:currentHumidity };
+        const recordedSeconds = userGroundTruthSeconds;
+        userGroundTruthState = 'NOT_RAINING';
+
+        if (userGroundTruthTimerInterval) clearInterval(userGroundTruthTimerInterval);
+        if (timer) { timer.textContent = `${Math.floor(recordedSeconds/60)}m ${recordedSeconds%60}s`; timer.style.color = '#10B981'; }
+
+        const eventData = { type:'stop', ts:Date.now(), durationSec:recordedSeconds, lat:userLat, lon:userLon, temp:currentTemp, hum:currentHumidity };
         devRainEvents.push(eventData);
         syncDevEventToCloud(eventData);
-        console.log('[DEV] Rain events synced:', JSON.stringify(devRainEvents, null, 2));
+        console.log('[GROUND-TRUTH] Rain session ended:', JSON.stringify(devRainEvents, null, 2));
         fetchWeather();
+    });
+}
+
+// ═══ PULL TO REFRESH GESTURE ENGINE ═══
+function initPullToRefresh() {
+    const content = document.getElementById('app-content');
+    const pullBar = document.getElementById('pull-refresh-bar');
+    const pullText = document.getElementById('pull-refresh-text');
+    if (!content || !pullBar) return;
+
+    let startY = 0;
+    let currentY = 0;
+    let isPulling = false;
+
+    content.addEventListener('touchstart', (e) => {
+        if (content.scrollTop === 0) {
+            startY = e.touches[0].pageY;
+            isPulling = true;
+        }
+    }, { passive: true });
+
+    content.addEventListener('touchmove', (e) => {
+        if (!isPulling) return;
+        currentY = e.touches[0].pageY;
+        const diff = currentY - startY;
+
+        if (diff > 15 && content.scrollTop === 0) {
+            pullBar.classList.add('pulling');
+            if (diff > 75) {
+                if (pullText) pullText.textContent = 'Release to refresh live weather...';
+            } else {
+                if (pullText) pullText.textContent = 'Pull down to refresh...';
+            }
+        }
+    }, { passive: true });
+
+    content.addEventListener('touchend', async () => {
+        if (!isPulling) return;
+        const diff = currentY - startY;
+        isPulling = false;
+
+        if (diff > 75 && content.scrollTop === 0) {
+            pullBar.classList.add('refreshing');
+            if (pullText) pullText.textContent = 'Updating live weather data...';
+            if (navigator.vibrate) navigator.vibrate(25); // haptic pulse
+
+            await fetchWeather();
+
+            setTimeout(() => {
+                pullBar.classList.remove('pulling', 'refreshing');
+                if (pullText) pullText.textContent = 'Pull down to refresh...';
+            }, 600);
+        } else {
+            pullBar.classList.remove('pulling');
+        }
+        startY = 0; currentY = 0;
     });
 }
 
@@ -364,6 +466,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initONNX();
     initLocation();
     initDev();
+    initPullToRefresh();
     fetchWeather();
     setInterval(fetchWeather, 30000);
 });

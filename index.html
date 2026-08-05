@@ -40,6 +40,13 @@
 
     <!-- App Shell -->
     <div class="app-shell" id="app-shell">
+
+        <!-- Pull To Refresh Banner -->
+        <div id="pull-refresh-bar" class="pull-refresh-bar">
+            <svg class="pull-refresh-icon" id="pull-refresh-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+            <span id="pull-refresh-text">Pull down to refresh...</span>
+        </div>
+
         <div class="app-content" id="app-content">
 
             <!-- Header -->
@@ -83,6 +90,19 @@
                 <div class="advisory-text" id="advisory-text">Analyzing weather conditions for your area...</div>
             </div>
 
+            <!-- Ground-Truth Rain Button & Model Flywheel Control -->
+            <div class="dev-bar">
+                <div class="dev-bar-top">
+                    <span class="dev-label">GROUND-TRUTH MODEL FEEDBACK</span>
+                    <span id="dev-timer-display" class="dev-timer">00:00</span>
+                </div>
+                <div class="dev-buttons">
+                    <button id="btn-dev-rain-start" class="dev-btn dev-btn-rain">🌧️ It is Raining</button>
+                    <button id="btn-dev-rain-stop" class="dev-btn dev-btn-stop">☀️ It is NOT Raining</button>
+                </div>
+                <div id="flywheel-sync-status" class="flywheel-status-text">Cloud Flywheel: Ready for live feedback</div>
+            </div>
+
             <!-- Weather Stats -->
             <div class="stats-grid">
                 <div class="stat-card">
@@ -107,22 +127,10 @@
                 </div>
             </div>
 
-            <!-- DEV: Ground-Truth Stopwatch -->
-            <div class="dev-bar">
-                <div class="dev-bar-top">
-                    <span class="dev-label">DEV: Rain Ground-Truth</span>
-                    <span id="dev-timer-display" class="dev-timer">00:00</span>
-                </div>
-                <div class="dev-buttons">
-                    <button id="btn-dev-rain-start" class="dev-btn dev-btn-rain">It's Raining</button>
-                    <button id="btn-dev-rain-stop" class="dev-btn dev-btn-stop">Rain Stopped</button>
-                </div>
-            </div>
-
             <!-- Station Override (small, bottom) -->
             <div class="station-override">
                 <select id="station-picker" class="station-select">
-                    <option value="GPS_AUTO" selected>Auto-Detect Location</option>
+                    <option value="GPS_AUTO" selected>Auto-Detect Location (GPS)</option>
                     <option value="O3z05pGV">Wawa, Pilar / Limay - Bataan</option>
                     <option value="lMAZe9b3">Abucay - Bataan</option>
                     <option value="QgbGldAY">Pag-asa Bagac - Bataan</option>

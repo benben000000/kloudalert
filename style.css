@@ -210,7 +210,22 @@ html, body {
 .stat-label { font-size: 0.75rem; font-weight: 500; color: var(--text-faint); margin-bottom: 0.25rem; }
 .stat-val { font-size: 1.25rem; font-weight: 700; color: var(--text); }
 
-/* Dev Stopwatch */
+/* Pull To Refresh Bar */
+.pull-refresh-bar {
+    display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    height: 0px; opacity: 0; overflow: hidden;
+    transition: height 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
+    background: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--glass-border);
+}
+.pull-refresh-bar.pulling { height: 48px; opacity: 1; }
+.pull-refresh-icon { width: 18px; height: 18px; color: var(--accent); transition: transform 0.3s ease; }
+.pull-refresh-bar.refreshing .pull-refresh-icon { animation: spinRefresh 0.8s linear infinite; }
+@keyframes spinRefresh { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+#pull-refresh-text { font-size: 0.8125rem; font-weight: 600; color: var(--text-dim); }
+
+/* Dev Stopwatch & Flywheel */
 .dev-bar {
     background: rgba(17, 26, 36, 0.8);
     border: 1px solid rgba(255,255,255,0.12);
@@ -227,13 +242,18 @@ html, body {
 .dev-buttons { display: flex; gap: 0.5rem; }
 .dev-btn {
     flex: 1; border: none; border-radius: 0.5rem;
-    padding: 0.5rem; font-size: 0.8125rem; font-weight: 700;
+    padding: 0.625rem 0.5rem; font-size: 0.8125rem; font-weight: 700;
     font-family: var(--font); cursor: pointer;
     transition: opacity 0.15s, transform 0.1s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
-.dev-btn:active { opacity: 0.85; transform: scale(0.97); }
+.dev-btn:active { opacity: 0.85; transform: scale(0.96); }
 .dev-btn-rain { background: var(--warn); color: white; }
 .dev-btn-stop { background: var(--safe); color: white; }
+.flywheel-status-text {
+    font-size: 0.6875rem; font-weight: 600; color: var(--text-faint);
+    text-align: center; margin-top: 0.5rem; transition: color 0.3s ease;
+}
 
 /* Station Override */
 .station-override { margin-bottom: 0.75rem; }
